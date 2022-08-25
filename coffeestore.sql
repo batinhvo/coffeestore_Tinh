@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 22, 2022 lúc 06:24 PM
+-- Thời gian đã tạo: Th8 25, 2022 lúc 05:36 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -111,6 +111,7 @@ CREATE TABLE `tbl_admin` (
   `admin_password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin_phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `admin_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -119,8 +120,9 @@ CREATE TABLE `tbl_admin` (
 -- Đang đổ dữ liệu cho bảng `tbl_admin`
 --
 
-INSERT INTO `tbl_admin` (`admin_id`, `admin_email`, `admin_password`, `admin_name`, `admin_phone`, `created_at`, `updated_at`) VALUES
-(1, 'admin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Võ Bá Tính', '0349488429', NULL, NULL);
+INSERT INTO `tbl_admin` (`admin_id`, `admin_email`, `admin_password`, `admin_name`, `admin_phone`, `admin_image`, `created_at`, `updated_at`) VALUES
+(1, 'admin@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Võ Bá Tính', '0349488429', 'avt143.webp', NULL, NULL),
+(2, 'congtoai@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Bùi Lê Công Toại', '0912356987', 'toai214.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -179,9 +181,9 @@ CREATE TABLE `tbl_category_post` (
 --
 
 INSERT INTO `tbl_category_post` (`category_post_id`, `category_post_name`, `category_post_desc`, `category_post_status`) VALUES
-(1, 'Tin quần áo', 'Tin quần áo hot nhất', 1),
-(3, 'Tin Thời Trang', 'Tin thời trang hot nhất', 1),
-(4, 'Tin ba lô', 'Tin ba lô không đụng hàng', 1);
+(1, 'Mẹo hay hữu ích', 'Mẹo dành cho dân cafe chính hiệu', 1),
+(3, 'Kiến thức', 'Kiến thức cơ bản về cafe', 1),
+(4, 'Nguồn gốc', 'Nguồn gốc hạt cafe', 1);
 
 -- --------------------------------------------------------
 
@@ -223,6 +225,14 @@ CREATE TABLE `tbl_comment` (
   `comment_status` int(11) NOT NULL,
   `comment_parent_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `tbl_comment`
+--
+
+INSERT INTO `tbl_comment` (`comment_id`, `comment`, `comment_name`, `comment_date`, `comment_product_id`, `comment_status`, `comment_parent_id`) VALUES
+(23, 'Cà phê thơm, ngon, xuất sắc', 'Toại Còi', '2022-08-23 14:44:32', 35, 1, 0),
+(24, 'cảm ơn bạn đã đánh giá', 'Admin', '2022-08-23 14:44:51', 35, 1, 23);
 
 -- --------------------------------------------------------
 
@@ -374,6 +384,7 @@ CREATE TABLE `tbl_order` (
   `shipping_id` int(11) NOT NULL,
   `order_status` int(50) NOT NULL,
   `order_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order_total` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -412,6 +423,15 @@ CREATE TABLE `tbl_post` (
   `post_status` int(11) NOT NULL,
   `post_image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Đang đổ dữ liệu cho bảng `tbl_post`
+--
+
+INSERT INTO `tbl_post` (`post_id`, `category_post_id`, `post_title`, `post_desc`, `post_content`, `post_status`, `post_image`) VALUES
+(6, 4, 'Giới thiệu về Cafe', '<p>Theo một nghi&ecirc;n cứu của nh&agrave; ho&aacute; học Hoa Kỳ &ndash; Joe Vinson thuộc Đại học Scranton th&igrave; c&agrave; ph&ecirc; l&agrave; một nguồn quan trọng cung cấp c&aacute;c chất chống &ocirc;xi h&oacute;a cho cơ thể, vai tr&ograve; m&agrave; trước đ&acirc;y người ta chỉ thấy ở hoa quả v&agrave; rau xanh. Những chất n&agrave;y cũng gi&aacute;n tiếp l&agrave;m giảm nguy cơ bị ung thư ở người.</p>', '<p><strong>Lịch sử</strong></p>\r\n\r\n<p><em><strong>C&agrave; ph&ecirc;</strong></em>&nbsp;(gốc từ&nbsp;<em>caf&eacute;</em>&nbsp;trong tiếng Ph&aacute;p) l&agrave; một loại thức uống m&agrave;u đen c&oacute; chứa chất caffein, được sản xuất từ những hạt c&agrave; ph&ecirc; rang l&ecirc;n. C&agrave; ph&ecirc; được sử dụng lần đầu ti&ecirc;n v&agrave;o thế kỉ thứ 9, khi n&oacute; được kh&aacute;m ph&aacute; ra từ v&ugrave;ng cao nguy&ecirc;n Ethiopia. Từ đ&oacute;, n&oacute; lan ra Ai Cập v&agrave; Yemen v&agrave; tới thế kỉ thứ 15 th&igrave; đến Armenia, Ba Tư, Thổ Nhĩ Kỳ v&agrave; ph&iacute;a bắc Ch&acirc;u Phi. Từ thế giới Hồi gi&aacute;o, c&agrave; ph&ecirc; đến &Yacute;, sau đ&oacute; l&agrave; phần c&ograve;n lại của Ch&acirc;u &Acirc;u, Indonesia v&agrave; Hoa Kỳ. Ng&agrave;y nay, c&agrave; ph&ecirc; l&agrave; một trong những thức uống th&ocirc;ng dụng to&agrave;n cầu.</p>\r\n\r\n<p>Đồn điền c&agrave; ph&ecirc; đầu ti&ecirc;n được lập ở Việt Nam l&agrave; do người Ph&aacute;p khởi sự ở gần Kẻ Sở, Bắc Kỳ v&agrave;o năm 1888. Giống c&agrave; ph&ecirc;&nbsp;<em>arabica</em>&nbsp;(tức c&agrave; ph&ecirc; ch&egrave;) được trồng ở ven s&ocirc;ng. Sau việc canh t&aacute;c c&agrave; ph&ecirc; lan xuống v&ugrave;ng Phủ L&yacute;, Ninh B&igrave;nh, Thanh H&oacute;a, Nghệ An, Kon Tum v&agrave; Di Linh.</p>\r\n\r\n<p><strong>Ph&acirc;n Loại</strong><br />\r\nBa d&ograve;ng c&acirc;y c&agrave; ph&ecirc; ch&iacute;nh l&agrave;:</p>\r\n\r\n<ul>\r\n	<li><em>Arabica</em>&nbsp;&ndash; c&agrave; ph&ecirc; ch&egrave;</li>\r\n	<li><em>Canephora</em>&nbsp;(Robusta) &ndash; c&agrave; ph&ecirc; vối</li>\r\n	<li><em>Excelsa</em>&nbsp;(Liberia) &ndash; c&agrave; ph&ecirc; m&iacute;t</li>\r\n</ul>\r\n\r\n<p><img alt=\"\" src=\"https://lh3.googleusercontent.com/-hB3sSWUufyY/VtOg4tnRcOI/AAAAAAAAA08/OAqywK0940A/s800-Ic42/caphe-voi.jpg\" /></p>\r\n\r\n<p>Chất lượng hay đẳng cấp của c&agrave; ph&ecirc; kh&aacute;c nhau t&ugrave;y theo từng loại c&acirc;y, từng loại hạt v&agrave; nơi trồng kh&aacute;c nhau. C&agrave; ph&ecirc; Robusta được đ&aacute;nh gi&aacute; thấp hơn so với c&agrave; ph&ecirc; Arabica do c&oacute; chất lượng thấp hơn v&agrave; gi&aacute; cả theo đ&oacute; cũng rẻ hơn. Loại c&agrave; ph&ecirc; đắt nhất v&agrave; hiếm nhất thế giới t&ecirc;n l&agrave; C&agrave; ph&ecirc; Kopi Luwak (hay &ldquo;c&agrave; ph&ecirc; chồn&rdquo;) của Việt Nam v&agrave; Indonesia. Đ&acirc;y kh&ocirc;ng phải l&agrave; một giống c&agrave; ph&ecirc; m&agrave; một c&aacute;ch chế biến c&agrave; ph&ecirc; bằng c&aacute;ch d&ugrave;ng bộ ti&ecirc;u h&oacute;a của lo&agrave;i cầy.</p>\r\n\r\n<p>C&agrave; ph&ecirc; chia ra nhiều loại t&ugrave;y theo c&aacute;ch rang. Rang c&agrave; ph&ecirc; l&agrave; để cho bớt độ ẩm trong hạt, dầu thơm tỏa ra. Trong kỹ nghệ, c&agrave; ph&ecirc; được rang với số lượng lớn d&ugrave;ng nhiệt độ cao trong một thời gian nhanh (khoảng 204 đến 260 &deg;C trong v&ograve;ng 5 ph&uacute;t) rồi l&agrave;m nguội bằng quạt hơi hay rảy nước cho khỏi ch&aacute;y kh&eacute;t.</p>\r\n\r\n<p>Người ta c&oacute; thể rang c&agrave; ph&ecirc; sơ s&agrave;i v&agrave; được gọi dưới c&aacute;i t&ecirc;n Cinnamon roast (thời gian khoảng 7 ph&uacute;t), rang vừa (medium roast) c&ograve;n gọi l&agrave; full city hay brown (thời gian từ 9 đến 11 ph&uacute;t) hay rang kỹ (full roast) tức l&agrave; rang kiểu Ph&aacute;p thời gian từ 12 đến 13 ph&uacute;t. Những c&aacute;ch rang kỹ nhất đến ch&aacute;y x&eacute;m khiến cho hạt c&agrave; ph&ecirc; b&oacute;ng nhẫy l&agrave; kiểu rang của người &Yacute; (espresso) th&igrave; phải từ 14 ph&uacute;t trở l&ecirc;n cho đến khi bắt đầu ch&aacute;y th&agrave;nh than.</p>\r\n\r\n<p>C&agrave; ph&ecirc; cũng ph&acirc;n biệt theo c&aacute;ch xay, xay mịn hay to hạt t&ugrave;y theo c&aacute;ch pha. Trong khoảng một trăm năm trở lại đ&acirc;y, người ta đ&atilde; chế biến ra loại c&agrave; ph&ecirc; bột, chỉ cần bỏ v&agrave;o nước s&ocirc;i l&agrave; uống được. C&agrave; ph&ecirc; bột được điều chế theo hai c&aacute;ch: l&agrave;m kh&ocirc; bằng c&aacute;ch đ&ocirc;ng lạnh (freeze drying) hay l&agrave;m kh&ocirc; bằng c&aacute;ch phun (spray drying). Cả hai đều phải được lọc trước để r&uacute;t hết tinh chất rồi phun ra th&agrave;nh những hạt li ti để l&agrave;m kh&ocirc;. &nbsp;Tuy nhi&ecirc;n những người kh&oacute; t&iacute;nh vẫn cho rằng c&agrave; ph&ecirc; bột kh&ocirc;ng thể n&agrave;o bằng c&agrave; ph&ecirc; pha được.</p>\r\n\r\n<p><strong>Ảnh hưởng của c&agrave; ph&ecirc;</strong><br />\r\n<img alt=\"\" src=\"https://lh3.googleusercontent.com/-4LR7tVvkl3w/VtOg5eaFwhI/AAAAAAAAA1A/iY9Euoxg0xY/s800-Ic42/anh%252520huong.jpg\" /></p>\r\n\r\n<p><em><strong>T&aacute;c dụng an thần</strong>.</em>&nbsp;Người ta đ&atilde; chứng minh được rằng, nếu đi ngủ trong v&ograve;ng 15 ph&uacute;t sau khi uống c&agrave; ph&ecirc; th&igrave; giấc ngủ sẽ s&acirc;u hơn, bởi m&aacute;u trong n&atilde;o được lưu th&ocirc;ng tốt hơn. Nhưng nếu tiếp tục chần chừ th&igrave; t&aacute;c dụng n&agrave;y sẽ mất dần đi, v&agrave; sau đ&oacute; th&igrave; caffein bắt đầu ph&aacute;t huy hiệu quả, ch&uacute;ng ta sẽ kh&ocirc;ng ngủ được nữa.</p>\r\n\r\n<p><em><strong>K&iacute;ch th&iacute;ch sự tập trung v&agrave; hưng phấn.</strong></em>&nbsp;N&ecirc;n uống c&agrave; ph&ecirc; nhiều lần trong ng&agrave;y, mỗi lần một ngụm nhỏ, thay v&igrave; uống một cốc thật to v&agrave;o buổi s&aacute;ng. C&aacute;ch n&agrave;y đặc biệt th&iacute;ch hợp với những người phải l&agrave;m việc v&agrave;o ban đ&ecirc;m, họ sẽ cảm thấy dễ thức khuya hơn cũng như giữ được sự tập trung cao hơn.</p>\r\n\r\n<p><em><strong>Chống &ocirc;xi h&oacute;a.</strong>&nbsp;</em>Trung t&acirc;m ung thư quốc gia Nhật Bản ở Tokyo đ&atilde; thực hiện một th&iacute; nghiệm k&eacute;o d&agrave;i 10 năm tr&ecirc;n 100.000 người uống c&agrave; ph&ecirc; v&agrave; ph&aacute;t hiện ra trong số họ chỉ c&oacute; 214 người mắc phải chứng ung thư thận. Trong khi đ&oacute; ở những người kh&ocirc;ng uống c&agrave; ph&ecirc;, tỉ lệ n&agrave;y l&agrave; 547/100.000, nghĩa l&agrave; cao hơn hai lần. Từ đ&oacute; họ r&uacute;t ra kết luận rằng c&aacute;c chất chống &ocirc;xi ho&aacute; trong c&agrave; ph&ecirc; c&oacute; khả năng bảo vệ c&aacute;c tế b&agrave;o thận khỏi bị ăn m&ograve;n. Th&iacute; nghiệm so s&aacute;nh cũng chỉ ra rằng tr&agrave; xanh kh&ocirc;ng c&oacute; t&aacute;c dụng bảo vệ tr&ecirc;n giống như của c&agrave; ph&ecirc;.</p>\r\n\r\n<p>Tuy nhi&ecirc;n để ph&aacute;t huy ảnh hưởng t&iacute;ch cực của&nbsp;loại đồ uống thơm ngon n&agrave;y ch&uacute;ng ta kh&ocirc;ng n&ecirc;n lạm dụng v&agrave;&nbsp;chỉ n&ecirc;n&nbsp;sử dụng ở liều lượng th&iacute;ch hợp để c&oacute; t&aacute;c dụng tốt đối với sức khỏe.</p>', 1, 'coffee-443.jpg'),
+(7, 3, 'Những kiến thức cơ bản về Cafe', '<p>Cafe l&agrave; một loại thực vật, một thức uống được nhắc t&ecirc;n rất nhiều bởi v&igrave; n&oacute; đ&atilde; qu&aacute; quen thuộc với người Việt Nam.&nbsp;<strong>Những kiến thức cơ bản về cafe</strong>&nbsp;tr&igrave;nh b&agrave;y trong b&agrave;i viết sau đ&acirc;y sẽ gi&uacute;p bạn đọc hiểu r&otilde; hơn về loại thức uống n&agrave;y.</p>', '<h2><strong>Kiến thức chung về cafe</strong></h2>\r\n\r\n<p>Tr&ecirc;n thực tế c&oacute; rất nhiều loại cafe kh&aacute;c nhau, mỗi loại lại c&oacute; những đặc điểm sinh học kh&aacute;c nhau, từ đ&oacute; cho ra hương vị thức uống kh&aacute;c nhau.</p>\r\n\r\n<p>Trong số&nbsp;<strong>những kiến thức cơ bản về cafe</strong>&nbsp;c&oacute; thể thấy, cafe c&oacute; hai loại ch&iacute;nh l&agrave; cafe Arabica v&agrave; cafe Robusta, Việt Nam được biết đến l&agrave; nước xuất khẩu cafe Robusta lớn nhất thế giới v&agrave; đứng thứ hai thể giới về tổng sản lượng xuất khẩu hạt cafe.</p>\r\n\r\n<p>Cafe Arabica c&oacute; đặc điểm l&agrave; hương thơm dịu nhẹ v&agrave; vị đắng d&igrave;u dịu, kh&aacute;c với cafe Robusta c&oacute; hương thơm nồng v&agrave; vị đắng nhẫn hơn. V&agrave; qua thời gian, qua nhiều v&ugrave;ng địa l&yacute;, mỗi loại lại thu thập cho m&igrave;nh những t&iacute;n đồ &ldquo;ghiền&rdquo; cafe ri&ecirc;ng.</p>\r\n\r\n<p>Thậm ch&iacute;, những người s&agrave;nh cafe c&ograve;n c&oacute; những c&ocirc;ng thức ri&ecirc;ng đặc biệt để pha trộn hai loại cafe n&agrave;y với một tỷ lệ nhất định. Từ đ&oacute; tạo ra những ly cafe thơm ngon hảo hạng, uống một lần m&agrave; nhớ m&atilde;i!</p>\r\n\r\n<p>Xem th&ecirc;m &gt;&gt;&nbsp;<a href=\"https://caphenguyenchat.vn/mo-quan-cafe\">C&agrave; ph&ecirc; nhượng quyền số 1 Việt Nam</a></p>\r\n\r\n<p><img alt=\"\" height=\"762\" sizes=\"(max-width: 842px) 100vw, 842px\" src=\"https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-3.jpg\" srcset=\"https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-3.jpg 842w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-3-510x462.jpg 510w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-3-640x579.jpg 640w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-3-300x271.jpg 300w\" width=\"842\" /></p>\r\n\r\n<p>V&agrave; để tạo ra được hương vị thơm ngon đ&oacute;, kh&ocirc;ng thể thiếu qu&aacute; tr&igrave;nh rang xay cafe cầu kỳ v&agrave; chuy&ecirc;n nghiệp.</p>\r\n\r\n<p>Bằng nhiệt độ v&agrave; thời gian hợp l&yacute;, hạt cafe sẽ bung ra được những tinh t&uacute;y ẩn chứa b&ecirc;n trong m&agrave; b&igrave;nh thường ch&uacute;ng ta kh&ocirc;ng thể nhận biết hết được. C&oacute; hai phương ph&aacute;p rang cafe cơ bản đ&oacute; l&agrave; rang thủ c&ocirc;ng v&agrave; rang c&ocirc;ng nghiệp.</p>\r\n\r\n<p>Ng&agrave;y n&agrave;y, phương ph&aacute;p rang cafe thủ c&ocirc;ng l&agrave; phổ biến hơn cả nhằm phục vụ nhu cầu tạo ra cafe th&agrave;nh phẩm với c&ocirc;ng suất cao, sản lượng lớn.</p>\r\n\r\n<p>Cafe sau khi được rang ch&iacute;n tới độ nhất định thường được đem đi xay ra th&agrave;nh bột mịn. Bột cafe tơi xốp v&agrave; kh&ocirc; r&aacute;o l&agrave; bột chất lượng tốt, t&ugrave;y theo d&ograve;ng cafe m&agrave; sẽ c&oacute; gi&aacute; cả tới tay người ti&ecirc;u d&ugrave;ng kh&aacute;c nhau. Ch&uacute; &yacute; kh&acirc;u bảo quản cực kỳ quan trọng th&igrave; mới giữ được cả hương cả vị cafe tươi mới như ban đầu.</p>\r\n\r\n<p>Xem th&ecirc;m &gt;&gt;&nbsp;<a href=\"https://caphenguyenchat.vn/\">C&agrave; ph&ecirc; sạch &ndash; cafe nguy&ecirc;n chất</a></p>\r\n\r\n<p><img alt=\"\" height=\"768\" sizes=\"(max-width: 1024px) 100vw, 1024px\" src=\"https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-4.jpg\" srcset=\"https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-4.jpg 1024w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-4-510x383.jpg 510w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-4-640x480.jpg 640w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-4-300x225.jpg 300w\" width=\"1024\" /></p>\r\n\r\n<h2><strong>C&aacute;ch pha cafe của người Việt Nam</strong></h2>\r\n\r\n<p>C&aacute;ch pha cafe l&agrave; một phần cực kỳ quan trọng trong<strong>&nbsp;những kiến thức cơ bản về cafe</strong>&nbsp;m&agrave; bạn đọc n&ecirc;n nắm r&otilde;.</p>\r\n\r\n<p>Học hỏi từ c&aacute;ch pha cafe của những nước ch&acirc;u &acirc;u đi trước, người Việt cũng t&igrave;m ra cho m&igrave;nh một c&aacute;ch pha chế cafe v&ocirc; c&ugrave;ng đặc biệt để từ đ&oacute; tạo n&ecirc;n một thương hiệu đặc sắc cho văn h&oacute;a cafe của đất nước m&igrave;nh. Đ&oacute; ch&iacute;nh l&agrave; cafe phin!</p>\r\n\r\n<p>Cafe được pha bằng c&ocirc;ng cụ rất đơn giản đ&oacute; ch&iacute;nh l&agrave; chiếc phin, thường được l&agrave;m từ nh&ocirc;m gi&uacute;p giữ n&oacute;ng l&acirc;u. Khi cho bột cafe v&agrave;o trong phin sẽ được n&eacute;n xuống bằng một tấm lọc rời v&agrave; đổ nước s&ocirc;i 90-95 độ C v&agrave;o.</p>\r\n\r\n<p>Nước sẽ ngấm từ từ v&agrave;o bột cafe để nhỏ xuống từng giọt cafe tinh t&uacute;y đậm đặc, đồng thời nhiệt độ nước được kiểm so&aacute;t để kh&ocirc;ng l&agrave;m bay hơi mất những tinh dầu c&oacute; trong bột cafe.</p>\r\n\r\n<p>Dưới đ&aacute;y ly c&oacute; thể đ&atilde; c&oacute; một lớp sữa đặc b&eacute;o ngậy chờ sẵn, chỉ cần cafe nhỏ xuống hết l&agrave; sẽ được đ&aacute;nh đều l&ecirc;n để cafe v&agrave; sữa h&ograve;a quyện v&agrave;o nhau tạo n&ecirc;n ly cafe sữa tuyệt hảo. Người d&ugrave;ng c&oacute; thể thưởng thức n&oacute;ng hoặc với đ&aacute; lạnh đều rất ngon.</p>\r\n\r\n<p><img alt=\"\" height=\"800\" sizes=\"(max-width: 1280px) 100vw, 1280px\" src=\"https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-1-1280x800.jpg\" srcset=\"https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-1-1280x800.jpg 1280w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-1-510x319.jpg 510w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-1-640x400.jpg 640w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-1-1024x640.jpg 1024w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-1-1536x960.jpg 1536w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-1-300x188.jpg 300w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-1.jpg 1920w\" width=\"1280\" /></p>\r\n\r\n<p>Một điều quan trọng cần ch&uacute; &yacute; kỹ khi pha cafe đ&oacute; ch&iacute;nh l&agrave; liều lượng cafe v&agrave; tỷ lệ pha chế thế n&agrave;o cho hợp l&yacute;, cho ngon.</p>\r\n\r\n<p>Biết được điều n&agrave;y kh&ocirc;ng phải dễ, tuy nhi&ecirc;n cũng kh&ocirc;ng qu&aacute; kh&oacute;, l&agrave; bởi v&igrave; hương vị thế n&agrave;o l&agrave; ngon phụ thuộc phần lớn v&agrave;o khẩu vị v&agrave; sở th&iacute;ch của người d&ugrave;ng.</p>\r\n\r\n<p>Vậy th&igrave;, h&atilde;y d&ugrave;ng mọi gi&aacute;c quan của m&igrave;nh để cảm nhận v&agrave; thưởng thức cafe, ắt sẽ t&igrave;m ra c&ocirc;ng thức chuẩn v&agrave; lượng chuẩn!</p>\r\n\r\n<p><img alt=\"\" height=\"754\" sizes=\"(max-width: 1024px) 100vw, 1024px\" src=\"https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-2.jpg\" srcset=\"https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-2.jpg 1024w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-2-510x376.jpg 510w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-2-640x471.jpg 640w, https://caphenguyenchat.vn/wp-content/uploads/2019/12/nhung-kien-thuc-co-ban-ve-cafe-2-300x221.jpg 300w\" width=\"1024\" /></p>\r\n\r\n<p><strong>Những kiến thức cơ bản về cafe</strong>&nbsp;trong b&agrave;i viết đ&atilde; tr&igrave;nh b&agrave;y ở tr&ecirc;n sẽ gi&uacute;p bạn đọc h&igrave;nh dung tổng quan về loại hạt th&uacute; vị n&agrave;y. Cafe ngon hơn nếu bạn biết c&aacute;c rang, c&aacute;ch xay, c&aacute;ch bảo quản như thế n&agrave;o cho hợp l&yacute;.</p>\r\n\r\n<p>Hơn nữa, một tỷ lệ pha trộn ho&agrave;n hảo v&agrave; c&aacute;ch pha chế đ&uacute;ng điệu phin sẽ khiến cho bạn l&agrave;m chủ được những hương vị tinh t&uacute;y của ly cafe. H&atilde;y t&igrave;m hiểu kỹ hơn nữa về cafe để trở th&agrave;nh người uống cafe s&agrave;nh điệu bạn nh&eacute;!</p>', 1, 'nhung-kien-thuc-co-ban-ve-cafe-2435.jpg'),
+(8, 1, '5 Cách pha cafe ngon – độc – lạ mà bạn nên thử tại nhà', '<p><em>C&agrave; ph&ecirc; Mocha, c&agrave; ph&ecirc; kiểu Ph&aacute;p hay m&oacute;n c&agrave; ph&ecirc; Trứng&hellip; Tất cả đều l&agrave; những thức uống c&oacute; hương vị thơm ngon, độc đ&aacute;o. Đặc biệt, với c&aacute;ch pha cafe ngon của Procaffe, những m&oacute;n uống n&agrave;y lại trở n&ecirc;n dễ l&agrave;m hơn bao giờ hết. Tham khảo ngay nh&eacute;</em></p>', '<h2><strong>1. C&agrave; ph&ecirc; Mocha (kh&ocirc;ng cần d&ugrave;ng m&aacute;y)</strong></h2>\r\n\r\n<p><img alt=\"\" height=\"354\" sizes=\"(max-width: 480px) 100vw, 480px\" src=\"http://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha.gif\" srcset=\"https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha.gif 480w, https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-350x258.gif 350w\" width=\"480\" /></p>\r\n\r\n<p>Mocha l&agrave; 1 loại thức uống được pha trộn giữa c&agrave; ph&ecirc;, sữa tươi v&agrave; th&ecirc;m hương vị chocolate, bột cacao. Vị đắng nhẹ, hương thơm của chocolate h&ograve;a quyện với vị đắng v&agrave; hương cafe tạo n&ecirc;n một thức uống ngọt ng&agrave;o ho&agrave;n hảo. Đ&acirc;u đ&oacute; lại đan xen hương vị b&eacute;o ngậy của sữa tươi được đ&aacute;nh bống l&ecirc;n. Tất cả tạo n&ecirc;n t&aacute;ch cafe đầy l&ocirc;i cuốn hấp dẫn.</p>\r\n\r\n<p>Caf&eacute; Mocha l&agrave; m&oacute;n uống ph&ugrave; hợp với tất cả mọi người, nhất l&agrave; ph&aacute;i nữ bởi lẽ vị cafe kh&ocirc;ng qu&aacute; đắng lại h&agrave;i h&ograve;a với vị b&eacute;o, thơm của sữa v&agrave; chocolate.</p>\r\n\r\n<h3><strong>Nguy&ecirc;n liệu/ Dụng cụ</strong></h3>\r\n\r\n<ul>\r\n	<li>3 g&oacute;i&nbsp;<a href=\"https://procaffe.vn/san-pham/ca-phe-hoa-tan-procaffe-decaffeinato/\">cafe h&ograve;a tan sấy lạnh Procaffe</a>&nbsp;(cafe h&ograve;a tan sấy lạnh c&oacute; độ hồi hương cao n&ecirc;n sẽ giữ được trọn vẹn hương vị của cafe Mocha)</li>\r\n	<li>1 th&igrave;a bột cacao (Bạn thay bằng bột Milo cũng được nh&eacute;)</li>\r\n	<li>300ml sữa tươi thanh tr&ugrave;ng hoặc sữa nguy&ecirc;n kem</li>\r\n	<li>20gram dark chocolate (70% cacao trở l&ecirc;n)</li>\r\n	<li>Đường (Hoặc Sữa đặc)</li>\r\n	<li>Nước n&oacute;ng</li>\r\n	<li>Th&igrave;a nhỏ uống cafe, nồi nhỏ, t&aacute;ch cafe, b&igrave;nh c&oacute; nắp (bạn c&oacute; thể tận dụng b&igrave;nh đựng sữa cũng được)</li>\r\n</ul>\r\n\r\n<p><img alt=\"\" height=\"448\" sizes=\"(max-width: 607px) 100vw, 607px\" src=\"http://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-2.jpg.webp\" srcset=\"https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-2.jpg.webp 800w,https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-2-350x258.jpg.webp 350w\" width=\"607\" /></p>\r\n\r\n<h3><strong>C&aacute;ch thực hiện</strong></h3>\r\n\r\n<p><em>Phần c&agrave; ph&ecirc; (1)</em></p>\r\n\r\n<ul>\r\n	<li>Cho 2 g&oacute;i cafe h&ograve;a tan sấy lạnh Procaffe, 1 th&igrave;a đường, 1 th&igrave;a cacao v&agrave;o t&aacute;ch cafe</li>\r\n	<li>Ch&acirc;m nước n&oacute;ng 90C vừa đủ v&agrave;o t&aacute;ch</li>\r\n	<li>Khuấy kỹ, đến khi thấy hỗn hợp cafe sệt v&agrave; mịn</li>\r\n</ul>\r\n\r\n<p><em>Phần chocolate n&oacute;ng (2)</em></p>\r\n\r\n<ul>\r\n	<li>Cho 20gram dark chocolate v&agrave; 1 th&igrave;a đường v&agrave;o ch&eacute;n nhỏ</li>\r\n	<li>Ch&acirc;m 1 &iacute;t nước s&ocirc;i vừa đủ v&agrave;o ch&eacute;n, đợi 1 ph&uacute;t để phần chocolate tan chảy ho&agrave;n to&agrave;n</li>\r\n	<li>Cho 1 g&oacute;i cafe h&ograve;a tan sấy lạnh Procaffe v&agrave;o ch&eacute;n</li>\r\n	<li>Khuấy kỹ, đến khi hỗn hợp mịn</li>\r\n</ul>\r\n\r\n<p><img alt=\"\" height=\"465\" sizes=\"(max-width: 620px) 100vw, 620px\" src=\"http://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha.jpg.webp\" srcset=\"https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha.jpg.webp 800w,https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-350x263.jpg.webp 350w\" width=\"620\" /></p>\r\n\r\n<p><em>Phần foam sữa (3)</em></p>\r\n\r\n<ul>\r\n	<li>Đun 300ml sữa tươi ở lửa nhỏ trong v&ograve;ng 3 ph&uacute;t</li>\r\n	<li>R&oacute;t phần sữa v&agrave;o b&igrave;nh, đậy k&iacute;n nắp</li>\r\n	<li>Lắc b&igrave;nh trong khoảng 30 &ndash; 40 gi&acirc;y, đến khi thấy nhiều bọt nhỏ li ti l&agrave; đạt</li>\r\n	<li>Cho (1) v&agrave; (2) v&agrave;o t&aacute;ch, khuấy đều. Từ từ r&oacute;t phần sữa n&oacute;ng (3) v&agrave;o, rắc th&ecirc;m bột cacao l&ecirc;n tr&ecirc;n để t&aacute;ch cafe th&ecirc;m đẹp mắt hơn.</li>\r\n</ul>\r\n\r\n<p><em>Mẹo: Để tr&aacute;nh vị ngọt đường qu&aacute; nhiều, bạn c&oacute; thể thay thế bằng sữa đặc khi l&agrave;m phần chocolate n&oacute;ng nh&eacute;.</em></p>\r\n\r\n<h2><strong>2. C&agrave; ph&ecirc; Trứng</strong></h2>\r\n\r\n<p>Bạn c&oacute; nghe đến c&agrave; ph&ecirc; trứng? Đ&acirc;y l&agrave; thức uống nổi tiếng tại H&agrave; Nội v&agrave;o những năm 1950, xuất ph&aacute;t từ việc khan hiếm nguồn sữa tươi thời bấy giờ m&agrave; người chủ đầu ti&ecirc;n của Giảng đ&atilde; d&ugrave;ng l&ograve;ng đỏ trứng g&agrave; như một giải ph&aacute;p thay thế v&agrave; đến nay, cafe Trứng như đặc sản của H&agrave; Nội m&agrave; ai ai cũng y&ecirc;u th&iacute;ch.</p>\r\n\r\n<p>Nguy&ecirc;n liệu l&agrave;m cafe trứng rất đơn giản, nhưng y&ecirc;u cầu một ch&uacute;t cầu kỳ v&agrave; tỉ mỉ trong kh&acirc;u pha chế. Cụ thể, một t&aacute;ch cafe trứng c&oacute; th&agrave;nh phần từ c&agrave; ph&ecirc; pha phin, l&ograve;ng đỏ trứng g&agrave; ta đ&aacute;nh b&ocirc;ng, một &iacute;t mật ong v&agrave; sữa đặc.</p>\r\n\r\n<p>C&agrave; ph&ecirc; trứng được đ&aacute;nh gi&aacute; rất thơm ngon, độc đ&aacute;o v&agrave; c&oacute; vị b&eacute;o vừa phải &ndash; đặc biệt lại kh&ocirc;ng tanh m&ugrave;i trứng như nhiều người vẫn nghĩ. C&agrave; ph&ecirc; kh&ocirc;ng qu&aacute; đắng, vị nhẹ nh&agrave;ng v&agrave; v&ocirc; c&ugrave;ng mịn m&agrave;ng với lớp foam trứng tr&ecirc;n bề mặt. Nhờ phần trứng đ&aacute;nh b&ocirc;ng m&agrave; hương vị cafe c&agrave;ng thăng hoa v&agrave; thơm hơn bội phần.</p>\r\n\r\n<p><img alt=\"công thức pha cafe ngon\" height=\"384\" src=\"https://saigonfoodtour.com/blog/wp-content/uploads/2019/03/Egg-Coffee-1-1024x640.jpg\" width=\"614\" /></p>\r\n\r\n<h3><strong>Nguy&ecirc;n liệu / Dụng cụ</strong></h3>\r\n\r\n<ul>\r\n	<li><a href=\"https://procaffe.vn/?attachment_id=2928\">Cafe Procaffe Classico</a>&nbsp;(<em>Classico c&oacute; tỉ lệ Arabica cao, cho hương thơm ng&aacute;t v&agrave; vị đắng vừa phải)</em></li>\r\n	<li>1 quả trứng g&agrave; ta cho khoảng 60ml cafe / 1 người uống</li>\r\n	<li>Một th&igrave;a nhỏ đường v&agrave; mật ong</li>\r\n	<li>Sữa đặc / kem đặc pha cafe</li>\r\n	<li>1 v&agrave;i giọt chanh</li>\r\n	<li>Đồ đ&aacute;nh trứng (tốt nhất l&agrave; m&aacute;y đ&aacute;nh trứng)</li>\r\n	<li>1 phin pha cafe bằng nh&ocirc;m; muỗng nhỏ uống cafe, t&aacute;ch cafe, 1 chiếc t&ocirc;, 1 chiếc b&aacute;t miệng rộng</li>\r\n</ul>\r\n\r\n<h3><strong>C&aacute;ch thực hiện</strong></h3>\r\n\r\n<p>Bước 1: Pha 60ml c&agrave; ph&ecirc; phin như c&aacute;ch th&ocirc;ng thường</p>\r\n\r\n<p>Bước 2: T&aacute;ch trứng lấy l&ograve;ng đỏ. Để l&ograve;ng đỏ v&agrave;o một chiếc t&ocirc; to, s&acirc;u l&ograve;ng. Bạn cần loại bỏ ho&agrave;n to&agrave;n l&ograve;ng trắng ra khỏi nếu kh&ocirc;ng thức uống sẽ bị tanh.</p>\r\n\r\n<p>Bước 3 &ndash; Bước đ&aacute;nh trứng: Thức uống của bạn c&oacute; th&agrave;nh c&ocirc;ng hay kh&ocirc;ng phụ thuộc nhiều v&agrave;o bước n&agrave;y.</p>\r\n\r\n<p>Cho một v&agrave;i giọt chanh, một &iacute;t đường v&agrave;o t&ocirc; chứa l&ograve;ng đỏ trứng. L&yacute; giải cho điều n&agrave;y th&igrave; li&ecirc;n quan một ch&uacute;t đến c&ocirc;ng đoạn đ&aacute;nh trứng trong l&agrave;m b&aacute;nh. Trong c&ocirc;ng t&aacute;c đ&aacute;nh trứng, đường gi&uacute;p trứng kh&ocirc;ng bị kh&ocirc;, đ&agrave;n hồi v&agrave; dẻo hơn, trứng sẽ xốp mịn hơn nếu bạn cho một &iacute;t đường v&agrave;o.</p>\r\n\r\n<p>Chanh l&agrave; chất x&uacute;c t&aacute;c để trứng b&ocirc;ng nhanh hơn. T&oacute;m lại, 02 chất n&agrave;y chỉ n&ecirc;n cho một lượng cực nhỏ để l&agrave;m &ldquo;bước đệm&rdquo; cho việc đ&aacute;nh trứng. Để khi thưởng thức, bạn sẽ kh&ocirc;ng nhận ra vị ngọt của đường v&agrave; vị chua của chanh.</p>\r\n\r\n<p>Bạn c&oacute; thể d&ugrave;ng m&aacute;y đ&aacute;nh trứng để việc đ&aacute;nh trứng diễn ra nhanh hơn hoặc đ&aacute;nh trứng c&aacute;ch thủy (Tham khảo th&ecirc;m tr&ecirc;n internet về đ&aacute;nh trứng c&aacute;ch thủy). Trứng phải được để ở nhiệt độ ph&ograve;ng, trường hợp lấy trứng từ trong tủ lạnh ra, phải để trứng kh&ocirc;ng c&ograve;n lạnh.</p>\r\n\r\n<p>Bước 4: Thực hiện đ&aacute;nh trứng cho đến khi hỗn hợp nhuyễn mịn, sệt, bọt kh&iacute; nhỏ</p>\r\n\r\n<p>Bước 5: Sau khi phin đ&atilde; chiết xuất hết cafe, nhẹ nh&agrave;ng nhấc phin ra. Từ từ đổ hỗn hợp trứng v&agrave;o ly, bạn n&ecirc;n đệm th&igrave;a nhỏ b&ecirc;n dưới d&ograve;ng chảy của trứng để trứng &ldquo;tiếp đất&rdquo; nhẹ nh&agrave;ng l&ecirc;n bề mặt cafe.</p>\r\n\r\n<p>Bước 6: Đặt ly v&agrave;o một chiếc b&aacute;t rộng c&oacute; chứa nước n&oacute;ng để cafe được giữ ấm l&acirc;u hơn.</p>\r\n\r\n<p>Bước 7: Thưởng thức khi c&ograve;n n&oacute;ng.</p>\r\n\r\n<h2><strong>3. C&agrave; ph&ecirc; kiểu Ph&aacute;p ngay tại nh&agrave; với b&igrave;nh French Press</strong></h2>\r\n\r\n<p><img height=\"299\" src=\"http://procaffe.vn/wp-content/uploads/2018/05/b%C3%ACnh-frech-press-bialetti-signature.jpg\" width=\"299\" /></p>\r\n\r\n<p>Pha cafe bằng b&igrave;nh French Press l&agrave; một trong những c&aacute;ch pha đơn giản nhất nhưng lại đem đến t&aacute;ch cafe c&oacute; hương vị thơm ngon độc đ&aacute;o. Đ&acirc;y cũng l&agrave; một trong những c&aacute;ch pha được CEO Starbucks &ndash; &ocirc;ng Howard Schultz ưa chuộng</p>\r\n\r\n<blockquote>\r\n<p>&ldquo;Đối với t&ocirc;i, c&aacute;ch tốt nhất để pha c&agrave; ph&ecirc; lu&ocirc;n lu&ocirc;n l&agrave; sử dụng b&igrave;nh French press. Đ&oacute; l&agrave; c&aacute;ch t&ocirc;i pha c&agrave; ph&ecirc; tại nh&agrave; trong suốt 25 năm qua. Kh&ocirc;ng giống như phương ph&aacute;p Pour Over khi nước đi qua bột c&agrave; ph&ecirc; v&agrave; theo trọng lực nhỏ giọt xuống dưới th&ocirc;ng qua một bộ lọc, bột c&agrave; ph&ecirc; trong b&igrave;nh French press l&uacute;c n&agrave;o cũng ngập tr&agrave;n trong nước; Việc ng&acirc;m ủ c&agrave; ph&ecirc; trong nước sẽ cho ra một hương vị m&agrave; kh&ocirc;ng thể đạt được với Pour over&rdquo;.&nbsp;<em>Tr&iacute;ch ONWARD &ndash; CEO Starbucks: Howard Schultz</em></p>\r\n</blockquote>\r\n\r\n<p>V&igrave; đ&acirc;y l&agrave; b&igrave;nh pha c&agrave; ph&ecirc; theo dạng n&eacute;n (phin n&eacute;n), bạn n&ecirc;n chọn bột c&agrave; ph&ecirc; xay loại vừa phải (medium ground coffee) để kh&ocirc;ng bị bột lẫn trong c&agrave; ph&ecirc;. Sau khi n&eacute;n c&agrave; ph&ecirc;, bạn n&ecirc;n chiết c&agrave; ph&ecirc; ra t&aacute;ch uống ngay. Ngo&agrave;i ra french press cũng c&oacute; thể d&ugrave;ng để pha tr&agrave;, rất ngon v&agrave; đẹp nữa nh&eacute;</p>\r\n\r\n<h3><strong>Nguy&ecirc;n liệu / Dụng cụ</strong></h3>\r\n\r\n<ul>\r\n	<li>1 b&igrave;nh&nbsp;<a href=\"https://procaffe.vn/?attachment_id=5464\">Bialetti French Press</a></li>\r\n	<li>Cafe rang mộc loại ngon</li>\r\n	<li>Th&igrave;a uống cafe, t&aacute;ch cafe</li>\r\n</ul>\r\n\r\n<h3><strong>C&aacute;ch thực hiện</strong></h3>\r\n\r\n<p>Bước 1: Cho nước s&ocirc;i v&agrave;o b&igrave;nh để ủ ấm, thời gian 1-2 ph&uacute;t.</p>\r\n\r\n<p>Bước 2: Cho bột c&agrave; ph&ecirc; v&agrave;o b&igrave;nh, ch&acirc;m nước s&ocirc;i</p>\r\n\r\n<p>Bước 3: Khuấy đều 1 lượt</p>\r\n\r\n<p>Bước 4: D&ugrave;ng nắp b&igrave;nh đậy hờ ở ph&iacute;a tr&ecirc;n, kh&ocirc;ng n&eacute;n. Để trong 4 ph&uacute;t cho c&agrave; ph&ecirc; c&oacute; đủ thời gian chiết xuất. Sau 4 ph&uacute;t, từ từ nhấn bộ lọc c&agrave; ph&ecirc; xuống (việc cảm thấy nặng tay cỡ 10 &ndash; 15kg l&agrave; b&igrave;nh thường).</p>\r\n\r\n<p>Bước 5: Uống ngay khi c&agrave; ph&ecirc; c&ograve;n n&oacute;ng để trải nghiệm đủ đầy hương vị c&agrave; ph&ecirc;.</p>\r\n\r\n<h2><strong>4. Pha cappuccino với b&igrave;nh tạo bọt sữa Bialetti Cappuccinatore</strong></h2>\r\n\r\n<p><img alt=\"\" height=\"352\" sizes=\"(max-width: 352px) 100vw, 352px\" src=\"http://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-3.jpg.webp\" srcset=\"https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-3.jpg.webp 1200w,https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-3-200x200.jpg.webp 200w,https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-3-100x100.jpg.webp 100w,https://procaffe.vn/wp-content/uploads/2020/03/5-cach-pha-cafe-ngon-doc-la-ma-ban-nen-thu-tai-nha-3-350x350.jpg.webp 350w\" width=\"352\" /></p>\r\n\r\n<p>Pha cappuccino kh&ocirc;ng cần d&ugrave;ng m&aacute;y v&agrave; ngay tại nh&agrave; với b&igrave;nh tạo bọt sữa Cappuccinatore từ Bialetti &Yacute;. Đ&acirc;y l&agrave; một trong những dụng cụ gi&uacute;p bạn pha cappuccino v&agrave; latte ngay tại nh&agrave; một c&aacute;ch đơn giản v&agrave; nhanh ch&oacute;ng nhất. Nhờ cấu tr&uacute;c lớp lưới lọc đặc biệt, việc tạo bọt sữa với Cappuccinatore diễn ra v&ocirc; c&ugrave;ng nhanh ch&oacute;ng.</p>\r\n\r\n<h3><strong>Nguy&ecirc;n liệu / Dụng cụ</strong></h3>\r\n\r\n<ul>\r\n	<li><a href=\"https://procaffe.vn/san-pham/binh-tao-bot-sua-bialetti-cappuccinatore/\">B&igrave;nh tạo bọt sữa Bialetti Cappuccinatore</a></li>\r\n	<li>Cafe rang mộc loại ngon hoặc&nbsp;<a href=\"https://procaffe.vn/danh-muc/ca-phe-rang-xay/ca-phe-hoa-tan/\">cafe h&ograve;a tan sấy lạnh Procaffe</a></li>\r\n	<li>Sữa tươi thanh tr&ugrave;ng</li>\r\n	<li>Phin pha cafe</li>\r\n	<li>Th&igrave;a nhỏ uống cafe, t&aacute;ch cafe</li>\r\n</ul>\r\n\r\n<h3><strong>C&aacute;ch thực hiện</strong></h3>\r\n\r\n<p>Bước 1: Thực hiện pha 60ml cafe phin như th&ocirc;ng thường hoặc pha 3 g&oacute;i cafe h&ograve;a tan sấy lạnh</p>\r\n\r\n<p>Bước 2: Đun n&oacute;ng 300ml sữa tươi thanh tr&ugrave;ng nhưng kh&ocirc;ng s&ocirc;i &ndash; Với chất liệu th&eacute;p kh&ocirc;ng gỉ, bạn c&oacute; thể đun trực tiếp tr&ecirc;n bếp. Nếu bạn mua b&igrave;nh thủy tinh, cần c&oacute; 1 chiếc nồi để đun sữa ri&ecirc;ng.</p>\r\n\r\n<p>Bước 3: Ấn p&iacute;t-t&ocirc;ng li&ecirc;n tục trong khoảng 30 &ndash; 40 gi&acirc;y</p>\r\n\r\n<p>Bước 4: Đổ cafe ra t&aacute;ch v&agrave; r&oacute;t nhẹ lớp foam sữa b&eacute;o ngậy l&ecirc;n tr&ecirc;n.</p>\r\n\r\n<p>Bước 5: Thưởng thức khi c&ograve;n ấm</p>\r\n\r\n<h2><strong>5. C&agrave; ph&ecirc; sữa sương s&aacute;o hạt chia</strong></h2>\r\n\r\n<p>Nghe lạ m&agrave; quen phải kh&ocirc;ng n&agrave;o? Vốn nghĩ sự kết hợp c&oacute; phần kh&ocirc;ng hợp n&agrave;y lại hợp kh&ocirc;ng tưởng đấy nh&eacute;. Vị đắng thơm của c&agrave; ph&ecirc; sữa truyền thống kết hợp với sương s&aacute;o v&agrave; chia mang đến cảm gi&aacute;c lạ miệng v&ocirc; c&ugrave;ng. Đ&acirc;y đang l&agrave; m&oacute;n uống &ldquo;khuynh đảo&rdquo; giới trẻ hiện nay. N&ecirc;n ngại g&igrave; m&agrave; kh&ocirc;ng trổ t&agrave;i thực hiện để mời mọi người n&agrave;o.</p>\r\n\r\n<h3><strong>Nguy&ecirc;n liệu / Dụng cụ</strong></h3>\r\n\r\n<ul>\r\n	<li><a href=\"https://procaffe.vn/?attachment_id=2928\">Cafe Classico</a></li>\r\n	<li>Sữa đặc</li>\r\n	<li>1 g&oacute;i bột sương s&aacute;o (Bạn c&oacute; thể dễ d&agrave;ng t&igrave;m mua tại c&aacute;c si&ecirc;u thị cho vệ sinh nh&eacute;)</li>\r\n	<li>hạt Chia</li>\r\n	<li>1 phin pha cafe, th&igrave;a uống cafe, nồi nhỏ, ly</li>\r\n</ul>\r\n\r\n<h3><strong>C&aacute;ch thực hiện</strong></h3>\r\n\r\n<p>Bước 1: Ng&acirc;m hạt chia</p>\r\n\r\n<p>Bước 2: Nấu sương s&aacute;o như hướng dẫn tr&ecirc;n g&oacute;i.</p>\r\n\r\n<p>*Mẹo: Bạn n&ecirc;n cho đ&uacute;ng lượng nướng như hướng dẫn của nh&agrave; sản xuất, kh&ocirc;ng n&ecirc;n cho nhiều hơn như nấu sương sa. Sau khi nấu xong bạn c&oacute; thể lấy r&acirc;y lọc lại để loại bỏ c&aacute;c cặn nhỏ.</p>\r\n\r\n<p>Bước 3: Đổ sương s&aacute;o v&agrave;o hộp thủy tinh, để ngăn m&aacute;t tủ lạnh</p>\r\n\r\n<p>Bước 4: Pha 60ml c&agrave; ph&ecirc; sữa bằng phin pha như th&ocirc;ng thường</p>\r\n\r\n<p>Bước 5: &nbsp;Sau khi bạn đ&atilde; c&oacute; cafe sữa, sương s&aacute;o cắt nhỏ vừa ăn v&agrave; hạt chia đ&atilde; ng&acirc;m nở. Chỉ cần cho hỗn hợp v&agrave;o, th&ecirc;m đ&aacute; nhuyễn v&agrave; thưởng thức.</p>', 1, 'nhung-kien-thuc-co-ban-ve-cafe-2511.jpg');
 
 -- --------------------------------------------------------
 
@@ -1222,15 +1242,14 @@ CREATE TABLE `tbl_shipping` (
 --
 
 INSERT INTO `tbl_shipping` (`shipping_id`, `shipping_name`, `shipping_address`, `shipping_phone`, `shipping_email`, `shipping_notes`, `shipping_method`, `created_at`, `updated_at`) VALUES
-(14, 'Bùi Lê Công Toại', 'Thành phố Cà Mau', '0123466666', 'toai@gmail.com', 'Giao tết', 1, NULL, NULL),
-(15, 'Nguyễn Quốc Khải', 'Thành phố Kênh F', '0962750217', 'khai@gmail.com', 'Giao vào ngày chủ nhật', 1, NULL, NULL),
-(16, 'Lương Minh Hiển', 'Thành phố Cống 15', '0962750217', 'hien@gmail.com', 'Không cần giao gấp', 0, NULL, NULL),
-(17, 'Ngô Quốc Sự', 'Thành Phố Sóc Trăng', '0654456963', 'Su@gmail.com', 'Giao trước khi nhập học', 1, NULL, NULL),
-(18, 'Lê Hoàng Đức', 'Số nhà 82', '0654456963', 'duc@gmail.com', 'Quá mệt mỏi rồi', 0, NULL, NULL),
-(20, 'Ngô Quốc Sự', 'Số nhà 357, Xã Xín Cái, Huyện Mèo Vạc, Tỉnh Hà Giang', '0962750217', 'Su@gmail.com', 'Giao trong đêm', 1, NULL, NULL),
-(23, 'Nguyễn Duy Anh Khoa', 'Số nhà 007, Phường Đồng Mai, Quận Hà Đông, Thành phố Hà Nội', '0962750217', 'khoa@gmail.com', 'Giao trước tết', 1, NULL, NULL),
-(24, 'Nguyễn Duy Anh Khoa', 'Số nhà 100, Phường Dương Nội, Quận Hà Đông, Thành phố Hà Nội', '0962750217', 'khoa@gmail.com', 'Giao nữa đêm', 1, NULL, NULL),
-(25, 'Nguyễn Quốc Khải', 'Số nhà 356, Phường Quang Trung, Thành phố Hà Giang, Tỉnh Hà Giang', '0123466666', 'khai@gmail.com', 'Giao đâu cũng được', 1, NULL, NULL);
+(6, 'Võ Bá Tính', 'Cần Thơ, Xã Sủng Trà, Huyện Mèo Vạc, Tỉnh Hà Giang', '0911264883', 'batinhvo@gmail.com', '555', 1, NULL, NULL),
+(7, 'Võ Bá Tính', 'Cần Thơ, Xã Sủng Trà, Huyện Mèo Vạc, Tỉnh Hà Giang', '0911264883', 'batinhvo@gmail.com', '555', 1, NULL, NULL),
+(8, 'Võ Bá Tính', 'Cần Thơ, Xã Sủng Trà, Huyện Mèo Vạc, Tỉnh Hà Giang', '0911264883', 'batinhvo@gmail.com', '555', 1, NULL, NULL),
+(9, 'Võ Bá Tính', 'Cần Thơ, Xã Sủng Trà, Huyện Mèo Vạc, Tỉnh Hà Giang', '0911264883', 'batinhvo@gmail.com', '159', 1, NULL, NULL),
+(10, 'Tính', 'Cần Thơ, Xã Sủng Trà, Huyện Mèo Vạc, Tỉnh Hà Giang', '0911264883', 'batinhvo@gmail.com', '123456789', 1, NULL, NULL),
+(11, 'Tính', 'Cần Thơ, Xã Sủng Trà, Huyện Mèo Vạc, Tỉnh Hà Giang', '0911264883', 'batinhvo@gmail.com', '123456789', 1, NULL, NULL),
+(12, 'Võ Bá Tính', 'Cần Thơ, Xã Sủng Trà, Huyện Mèo Vạc, Tỉnh Hà Giang', '0911264883', 'batinhvo@gmail.com', '11', 1, NULL, NULL),
+(13, 'tinh vo ba', 'Cần Thơ, Xã Sủng Trà, Huyện Mèo Vạc, Tỉnh Hà Giang', '0911264883', 'batinhvo@gmail.com', 'dd', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1251,10 +1270,11 @@ CREATE TABLE `tbl_slider` (
 --
 
 INSERT INTO `tbl_slider` (`slider_id`, `slider_name`, `slider_status`, `slider_image`, `slider_desc`) VALUES
-(1, 'slider1', 1, 'slider_585.png', 'Mô tả vậy thôi'),
-(2, 'slider2', 0, 'slider_1_image50.png', 'Không cần mô tả'),
-(4, 'slider4', 1, 'slider_21.jpg', 'Không'),
-(6, 'slider3', 1, 'slider_2_image37.png', 'Slider thôi');
+(9, 'Quả cafe', 1, 'slider-21.jpg', 'Cafe còn trên cây'),
+(10, 'Hạt cafe', 1, 'slider_390.webp', 'Hạt cafe'),
+(11, 'Thông điệp cafe', 1, 'slider-4-tieng-viet3.png', 'Thông điệp cafe mang đến'),
+(12, 'Cafe', 0, 'images51.jpg', 'Cafe'),
+(14, 'Tach cafe', 1, 'Slider-00177.jpg', 'tach cafe thom');
 
 -- --------------------------------------------------------
 
@@ -12628,20 +12648,6 @@ ALTER TABLE `tbl_gallery`
   ADD PRIMARY KEY (`gallery_id`);
 
 --
--- Chỉ mục cho bảng `tbl_order`
---
-ALTER TABLE `tbl_order`
-  ADD PRIMARY KEY (`order_id`);
-
---
--- Chỉ mục cho bảng `tbl_order_detail`
---
-ALTER TABLE `tbl_order_detail`
-  ADD PRIMARY KEY (`order_detail_id`),
-  ADD KEY `fkdetail_order` (`order_id`),
-  ADD KEY `fkdetail_product` (`product_id`);
-
---
 -- Chỉ mục cho bảng `tbl_post`
 --
 ALTER TABLE `tbl_post`
@@ -12723,7 +12729,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT cho bảng `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
-  MODIFY `admin_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `admin_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_admin_role`
@@ -12753,7 +12759,7 @@ ALTER TABLE `tbl_category_product`
 -- AUTO_INCREMENT cho bảng `tbl_comment`
 --
 ALTER TABLE `tbl_comment`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_coupon`
@@ -12780,22 +12786,10 @@ ALTER TABLE `tbl_gallery`
   MODIFY `gallery_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
--- AUTO_INCREMENT cho bảng `tbl_order`
---
-ALTER TABLE `tbl_order`
-  MODIFY `order_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT cho bảng `tbl_order_detail`
---
-ALTER TABLE `tbl_order_detail`
-  MODIFY `order_detail_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
-
---
 -- AUTO_INCREMENT cho bảng `tbl_post`
 --
 ALTER TABLE `tbl_post`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_product`
@@ -12813,13 +12807,13 @@ ALTER TABLE `tbl_role`
 -- AUTO_INCREMENT cho bảng `tbl_shipping`
 --
 ALTER TABLE `tbl_shipping`
-  MODIFY `shipping_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `shipping_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `tbl_slider`
 --
 ALTER TABLE `tbl_slider`
-  MODIFY `slider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `slider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
@@ -12830,13 +12824,6 @@ ALTER TABLE `users`
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
-
---
--- Các ràng buộc cho bảng `tbl_order_detail`
---
-ALTER TABLE `tbl_order_detail`
-  ADD CONSTRAINT `fkdetail_order` FOREIGN KEY (`order_id`) REFERENCES `tbl_order` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fkdetail_product` FOREIGN KEY (`product_id`) REFERENCES `tbl_product` (`product_id`);
 
 --
 -- Các ràng buộc cho bảng `tbl_product`

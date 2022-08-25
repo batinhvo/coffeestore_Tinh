@@ -28,13 +28,12 @@ class AdminController extends Controller
     }
 
     public function show_dashboard(){
-        // $this->AuthLogin();
-        // $order=Order::count();
-        // $post=Post::count();
-        // $product=Product::count();
-        // $sum=Order::where('order_status',2)->sum('order_total');
-        // return view('admin.dashboard')->with(compact('sum','order','post','product'));
-        return view('admin_layout');
+        $this->AuthLogin();
+        $order=Order::count();
+        $post=Post::count();
+        $product=Product::count();
+        $sum=Order::where('order_status',2)->sum('order_total');
+        return view('admin.dashboard')->with(compact('sum','order','post','product'));
     }
 
     public function dashboard(Request $request){
@@ -44,7 +43,7 @@ class AdminController extends Controller
         if($result){
             Session::put('admin_name',$result->admin_name);
             Session::put('admin_id',$result->admin_id);
-            //Session::put('admin_image',$result->admin_image);
+            Session::put('admin_image',$result->admin_image);
             return Redirect::to('/dashboard');
         }
         else {
@@ -57,7 +56,7 @@ class AdminController extends Controller
         $this->AuthLogin();
         Session::put('admin_name',null);
         Session::put('admin_id',null);
-       // Session::put('admin_image',null);
+        Session::put('admin_image',null);
         return Redirect::to('/admin');
     }
 }

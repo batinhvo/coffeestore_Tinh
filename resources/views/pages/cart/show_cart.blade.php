@@ -30,7 +30,7 @@
 							<td class="description">Tên sản phẩm</td>
 							<td class="price">Giá</td>
 							<td class="quantity">Số lượng</td>
-							<td class="total">Tổng tiền</td>
+							<td class="total">Thành tiền</td>
 							<td></td>
 						</tr>
 					</thead>
@@ -41,7 +41,7 @@
 							<td class="cart_product">
 								<a href=""><img width="70" src="{{('public/uploads/product/'.$v_content->options->image)}}" alt=""></a>
 							</td>
-							<td class="cart_description">
+							<td class="cart_description" style="width:25%">
 								<h4><a href="">{{$v_content->name}}</a></h4>
 								<p>ID: {{$v_content->id}}</p>
 							</td>

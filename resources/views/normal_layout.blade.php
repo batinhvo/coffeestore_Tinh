@@ -45,7 +45,7 @@
 					<div class="col-sm-6">
 						<div class="social-icons pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="https://www.facebook.com/vi.diep.54584"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
 								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
 								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
 								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
@@ -60,10 +60,11 @@
 		<div class="header-middle"><!--header-middle-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-4">
+				<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="{{URL::to('/trang-chu')}}"><img src="{{URL::to('public/frontend/images/logo.png')}}" alt="" /></a>
+							<a href="{{URL::to('/trang-chu')}}"><img class="logo" src="{{URL::to('public/frontend/images/logo.png')}}" alt=""/></a>
 						</div>
+						<h4 style="margin-top: 15px;">Hân hạnh phục vụ!</h4>
 						
 					</div>
 					<div class="col-sm-8">
@@ -283,7 +284,7 @@
 			<div class="container">
 				<div class="row">
 					<p class="pull-left">Copyright © 2022 CoffeeStore.</p>
-					<p class="pull-right">Designed by <span><a target="_blank" href="https://www.facebook.com/vi.diep.54584">Bá Tính</a></span></p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="https://www.facebook.com/">Bá Tính</a></span></p>
 				</div>
 			</div>
 		</div>
@@ -303,7 +304,7 @@
 
 	<script src="{{asset('public/frontend/js/lightgallery-all.min.js')}}"></script>
 	<script src="{{asset('public/frontend/js/lightslider.js')}}"></script>
-	<script src="{{asset('public/frontend/js/preti.js')}}"></script>
+	<script src="{{asset('public/frontend/js/prettify.js')}}"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -496,48 +497,70 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('.send_order').click(function(){
-				swal({
-				title: "Xác nhận đơn hàng",
-				text: "Đơn hàng sẽ không được hoàn trả khi đặt,bạn có muốn đặt chứ?",
-				type: "warning",
-				showCancelButton: true,
-				confirmButtonClass: "btn-danger",
-				confirmButtonText: "Cảm ơn, mua hàng",
-				cancelButtonText: "Không",
-				closeOnConfirm: false,
-				closeOnCancel: false
-				},
-				function(isConfirm){
-					if (isConfirm) {
-						var shipping_email =$('.shipping_email').val();
-						var shipping_name =$('.shipping_name').val();
-						var shipping_phone =$('.shipping_phone').val();
-						var shipping_address =$('.shipping_address').val();
-						var shipping_notes =$('.shipping_notes').val();
-						var shipping_method =$('.payment_select').val();
-						var order_fee =$('.order_fee').val();
-						var order_coupon =$('.order_coupon').val();
-						var _token = $('input[name="_token"]').val();
+				var shipping_email =$('.shipping_email').val();
+				var shipping_name =$('.shipping_name').val();
+				var shipping_phone =$('.shipping_phone').val();
+				var shipping_address =$('.shipping_address').val();
+				var shipping_notes =$('.shipping_notes').val();
+				var shipping_method =$('.payment_select').val();
+				var order_fee =$('.order_fee').val();
+				var order_coupon =$('.order_coupon').val();
+				var _token = $('input[name="_token"]').val();
+			
+
+				$.ajax({
+					url: '{{url('/confirm-order')}}',
+					method: 'POST',
+					data:{shipping_method:shipping_method,shipping_email:shipping_email,shipping_name:shipping_name,shipping_phone:shipping_phone,shipping_address:shipping_address,shipping_notes:shipping_notes,order_fee:order_fee,order_coupon:order_coupon,_token:_token},
+					success:function(data){
+						//swal("Đơn hàng", "Đơn hàng của bạn đã được xác nhận", "success");
+						alert('Thanh công');
+					}
+
+				});
+				// swal({
+				// title: "Xác nhận đơn hàng",
+				// text: "Đơn hàng sẽ không được hoàn trả khi đặt,bạn có muốn đặt chứ?",
+				// type: "warning",
+				// showCancelButton: true,
+				// confirmButtonClass: "btn-danger",
+				// confirmButtonText: "Đặt hàng",
+				// cancelButtonText: "Không",
+				// closeOnConfirm: false,
+				// closeOnCancel: false
+				// },
+				// function(isConfirm){
+				// 	if (isConfirm) {
+				// 		var shipping_email =$('.shipping_email').val();
+				// 		var shipping_name =$('.shipping_name').val();
+				// 		var shipping_phone =$('.shipping_phone').val();
+				// 		var shipping_address =$('.shipping_address').val();
+				// 		var shipping_notes =$('.shipping_notes').val();
+				// 		var shipping_method =$('.payment_select').val();
+				// 		var order_fee =$('.order_fee').val();
+				// 		var order_coupon =$('.order_coupon').val();
+				// 		var _token = $('input[name="_token"]').val();
 					
 
-						$.ajax({
-							url: '{{url('/confirm-order')}}',
-							method: 'POST',
-							data:{shipping_method:shipping_method,shipping_email:shipping_email,shipping_name:shipping_name,shipping_phone:shipping_phone,shipping_address:shipping_address,shipping_notes:shipping_notes,order_fee:order_fee,order_coupon:order_coupon,_token:_token},
-							success:function(data){
-								swal("Đơn hàng", "Đơn hàng của bạn đã được xác nhận", "success");
+				// 		$.ajax({
+				// 			url: '{{url('/confirm-order')}}',
+				// 			method: 'POST',
+				// 			data:{shipping_method:shipping_method,shipping_email:shipping_email,shipping_name:shipping_name,shipping_phone:shipping_phone,shipping_address:shipping_address,shipping_notes:shipping_notes,order_fee:order_fee,order_coupon:order_coupon,_token:_token},
+				// 			success:function(data){
+				// 			 	swal("Đơn hàng", "Đơn hàng của bạn đã được xác nhận", "success");
 
-							}
-						});
-						window.setTimeout(function(){
-							location.reload();
-						},3000);
+				// 			}
+
+				// 		});
+				// 		window.setTimeout(function(){
+				// 			location.reload();
+				// 		},3000);
 						
-					}else {
-						swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");
-					}
+				// 	}else {
+				// 		swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");
+				// 	}
 			
-				});
+				// });
 								
 				
 			});
@@ -558,7 +581,7 @@
 </script>
 
 <!-- Your SDK code -->
-<script>
+<!-- <script>
   window.fbAsyncInit = function() {
 	FB.init({
 	  xfbml            : true,
@@ -573,7 +596,7 @@
 	js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
 	fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
-</script>
+</script> -->
 
 </body>
 </html>

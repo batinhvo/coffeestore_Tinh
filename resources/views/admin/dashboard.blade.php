@@ -1,4 +1,4 @@
-@extends('admin_layout')
+<!-- @extends('admin_layout')
 @section('admin_content')
 <div class="row">
                     <div  class="col-sm-3">
@@ -11,8 +11,8 @@
                                 <a href="{{URL::to('/filter-order/2')}}" class="btn btn-warning">Chi Tiết</a>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-3">
+                    </div> 
+                     <div class="col-sm-3">
                         <div style="background:#af2330; color:white;" class="text-center bg-light card">
                             <div class="card-body">
                                 <h4 class="card-title">Đơn Hàng</h4>
@@ -43,4 +43,4 @@
 </div>
                   
                 
-@endsection
+@endsection -->

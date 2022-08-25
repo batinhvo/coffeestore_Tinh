@@ -142,10 +142,10 @@ Route::post('/export-csv','App\Http\Controllers\CategoryProduct@export_csv');
 Route::post('/import-csv','App\Http\Controllers\CategoryProduct@import_csv');
 
 //Manage
-Route::get('/add-manage','App\Http\Controllers\App\Http\Controllers\AuthController@add_manage');
-Route::get('/all-manage','App\Http\Controllers\App\Http\Controllers\AuthController@all_manage');
-Route::get('/register-auth','App\Http\Controllers\App\Http\Controllers\AuthController@register_auth');
-Route::post('/register','App\Http\Controllers\App\Http\Controllers\AuthController@register');
+Route::get('/add-manage','App\Http\Controllers\AuthController@add_manage');
+Route::get('/all-manage','App\Http\Controllers\AuthController@all_manage');
+Route::get('/register-auth','App\Http\Controllers\AuthController@register_auth');
+Route::post('/register','App\Http\Controllers\AuthController@register');
 
 //post
 Route::get('/add-post','App\Http\Controllers\PostController@add_post');
@@ -159,16 +159,16 @@ Route::get('/delete-post/{post_id}','App\Http\Controllers\PostController@delete_
 Route::post('/update-post/{post_id}','App\Http\Controllers\PostController@update_post');
 
 //new feed
-Route::get('/add-new-feed','NewFeed@add_new_feed');
-Route::get('/all-new-feed','NewFeed@all_new_feed');
-Route::post('/save-new-feed','NewFeed@save_new_feed');
-Route::get('/delete-newfeed/{post_id}','NewFeed@delete_newfeed');
-Route::get('/unactive-newfeed/{post_id}','NewFeed@unactive_newfeed');
-Route::get('/active-newfeed/{post_id}','NewFeed@active_newfeed');
-Route::get('/edit-newfeed/{post_id}','NewFeed@edit_newfeed');
-Route::post('/update-newfeed/{post_id}','NewFeed@update_newfeed');
-Route::get('/danh-muc-bai-viet/{post_id}','NewFeed@show_newfeed');
-Route::get('/bai-viet/{post_id}','NewFeed@bai_viet');
+Route::get('/add-new-feed','App\Http\Controllers\NewFeed@add_new_feed');
+Route::get('/all-new-feed','App\Http\Controllers\NewFeed@all_new_feed');
+Route::post('/save-new-feed','App\Http\Controllers\NewFeed@save_new_feed');
+Route::get('/delete-newfeed/{post_id}','App\Http\Controllers\NewFeed@delete_newfeed');
+Route::get('/unactive-newfeed/{post_id}','App\Http\Controllers\NewFeed@unactive_newfeed');
+Route::get('/active-newfeed/{post_id}','App\Http\Controllers\NewFeed@active_newfeed');
+Route::get('/edit-newfeed/{post_id}','App\Http\Controllers\NewFeed@edit_newfeed');
+Route::post('/update-newfeed/{post_id}','App\Http\Controllers\NewFeed@update_newfeed');
+Route::get('/danh-muc-bai-viet/{post_id}','App\Http\Controllers\NewFeed@show_newfeed');
+Route::get('/bai-viet/{post_id}','App\Http\Controllers\NewFeed@bai_viet');
 
 //gallery
 Route::get('/add-gallery/{product_id}','App\Http\Controllers\GalleryController@add_gallery');

@@ -41,7 +41,7 @@
 					<div class="col-sm-6">
 						<div class="social-icons pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
 								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
 								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
@@ -58,8 +58,9 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="{{URL::to('/trang-chu')}}"><img src="{{URL::to('public/frontend/images/logo.png')}}" alt="" /></a>
+							<a href="{{URL::to('/trang-chu')}}"><img class="logo" src="{{URL::to('public/frontend/images/logo.png')}}" alt=""/></a>
 						</div>
+						<h4 style="margin-top: 15px;">Hân hạnh phục vụ!</h4>
 						
 					</div>
 					<div class="col-sm-8">
@@ -133,7 +134,15 @@
 										<li><a href="login.html">Login</a></li> 
                                     </ul> -->
                                 </li> 
-							<!-- post đây nha -->
+								<li class="dropdown"><a href="#">Tin tức<i class="fa fa-angle-down"></i></a>
+									
+                                    <ul role="menu" class="sub-menu">
+										@foreach ($post as $key =>$all_post)
+                                       	 <li><a href="{{URL::to('/danh-muc-bai-viet/'.$all_post->category_post_id)}}">{{$all_post->category_post_name}}</a></li>
+										@endforeach
+                                    </ul>
+									
+                                </li> 
 								<li><a href="{{URL::to('/show-cart')}}">Giỏ hàng</a></li>
 								<!-- <li><a href="contact-us.html">Liên hệ</a></li> -->
 							</ul>
@@ -165,7 +174,24 @@
 							<li data-target="#slider-carousel" data-slide-to="2"></li>
 						</ol>
 						
-						<!-- slider đây nha -->
+						<div class="carousel-inner">
+							<?php
+								$i=0;
+							?>
+							@foreach($slider as $key =>$slide)
+							<?php $i++; ?>
+							<div class="item {{$i==1? 'active':''}}">
+								
+								<div class="col-sm-12">
+								<img src="public/uploads/slider/{{$slide->slider_image}}" alt=""  class="img " height="340px" width="100%">
+								
+								</div>
+							</div>
+							
+							
+							@endforeach
+							
+						</div>
 						
 						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
 							<i class="fa fa-angle-left"></i>
@@ -296,7 +322,7 @@
 			<div class="container">
 				<div class="row">
 					<p class="pull-left">Copyright © 2022 CoffeeStore.</p>
-					<p class="pull-right">Designed by <span><a target="_blank" href="https://www.facebook.com/">Bá Tính</a></span></p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="#">Bá Tính</a></span></p>
 				</div>
 			</div>
 		</div>

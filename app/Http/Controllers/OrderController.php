@@ -104,7 +104,7 @@ class OrderController extends Controller
    
    
         </style>
-        <h1><center>Shop quần áo Diệp Vĩ</center></h1>
+        <h1><center>Cửa hàng CoffeeStore</center></h1>
         <p>Tên nhân viên: '.$admin_name.'</p>
         <p>Ngày lập hóa đơn: '.now().'</p>
         

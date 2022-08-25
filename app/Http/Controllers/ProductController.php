@@ -24,91 +24,91 @@ class ProductController extends Controller
             return Redirect::to('admin')->send();
         }
     }
-    // public function delete_comment($comment_id){
-    //     $comment=Comment::find($comment_id);
-    //     $comment->delete();
-    //     Session::put('message','Xóa bình luận thành công');
-    //     return Redirect::to('all-comment');
-    // }
-    // public function reply_comment(Request $request){
-    //     $data=$request->all();
-    //     $comment=new Comment();
-    //     $comment->comment=$data['comment'];
-    //     $comment->comment_product_id=$data['comment_product_id'];
-    //     $comment->comment_parent_id=$data['comment_id'];
-    //     $comment->comment_name='Admin';
-    //     $comment->comment_status=1;
-    //     $comment->save();
-    // }
-    // public function allow_comment(Request $request){
-    //     $data=$request->all();
-    //     $comment=Comment::find($data['comment_id']);
-    //     $comment_status=$data['comment_status']==0 ? 1:0;
-    //     $comment->comment_status=$comment_status;
-    //     $comment->save();
+    public function delete_comment($comment_id){
+        $comment=Comment::find($comment_id);
+        $comment->delete();
+        Session::put('message','Xóa bình luận thành công');
+        return Redirect::to('all-comment');
+    }
+    public function reply_comment(Request $request){
+        $data=$request->all();
+        $comment=new Comment();
+        $comment->comment=$data['comment'];
+        $comment->comment_product_id=$data['comment_product_id'];
+        $comment->comment_parent_id=$data['comment_id'];
+        $comment->comment_name='Admin';
+        $comment->comment_status=1;
+        $comment->save();
+    }
+    public function allow_comment(Request $request){
+        $data=$request->all();
+        $comment=Comment::find($data['comment_id']);
+        $comment_status=$data['comment_status']==0 ? 1:0;
+        $comment->comment_status=$comment_status;
+        $comment->save();
 
-    // }
-    // public function all_comment(){
-    //     $comment=Comment::with('product')->where('comment_parent_id',0)->orderby('comment_id','desc')->paginate(5);
-    //     $comment_reply=Comment::with('product')->where('comment_parent_id','>',0)->orderby('comment_id','asc')->get();
-    //     return view('admin.comment.all_comment')->with(compact('comment','comment_reply'));
-    // }
-    // public function send_comment(Request $request){
-    //     $product_id=$request->product_id;
-    //     $comment_name=$request->comment_name;
-    //     $comment_content=$request->comment_content;
-    //     $comment=new Comment();
-    //     $comment->comment_name=$comment_name;
-    //     $comment->comment=$comment_content;
-    //     $comment->comment_product_id=$product_id;
-    //     $comment->comment_status=0;
-    //     $comment->comment_parent_id=0;
-    //     $comment->save();
-    // }
-    // public function load_comment(Request $request){
-    //     $product_id=$request->product_id;
-    //     $comment=Comment::where('comment_product_id',$product_id)->where('comment_parent_id',0)->where('comment_status',1)->orderby('comment_id','desc')->get();
-    //     $comment_reply=Comment::where('comment_product_id',$product_id)->where('comment_parent_id','>',0)->where('comment_status',1)->orderby('comment_id','asc')->get();
-    //     $output='';
-    //     foreach($comment as $key=>$com){
-    //         $output.='
-    //         <div class="row style_comment">
-	// 						<div class="col-md-2">
+    }
+    public function all_comment(){
+        $comment=Comment::with('product')->where('comment_parent_id',0)->orderby('comment_id','desc')->paginate(5);
+        $comment_reply=Comment::with('product')->where('comment_parent_id','>',0)->orderby('comment_id','asc')->get();
+        return view('admin.comment.all_comment')->with(compact('comment','comment_reply'));
+    }
+    public function send_comment(Request $request){
+        $product_id=$request->product_id;
+        $comment_name=$request->comment_name;
+        $comment_content=$request->comment_content;
+        $comment=new Comment();
+        $comment->comment_name=$comment_name;
+        $comment->comment=$comment_content;
+        $comment->comment_product_id=$product_id;
+        $comment->comment_status=0;
+        $comment->comment_parent_id=0;
+        $comment->save();
+    }
+    public function load_comment(Request $request){
+        $product_id=$request->product_id;
+        $comment=Comment::where('comment_product_id',$product_id)->where('comment_parent_id',0)->where('comment_status',1)->orderby('comment_id','desc')->get();
+        $comment_reply=Comment::where('comment_product_id',$product_id)->where('comment_parent_id','>',0)->where('comment_status',1)->orderby('comment_id','asc')->get();
+        $output='';
+        foreach($comment as $key=>$com){
+            $output.='
+            <div class="row style_comment">
+							<div class="col-md-2">
 								
-	// 							<img width="100%" src="'.url('/public/frontend/images/avatar.webp').'" alt="" class="img img-responsive img-thumbnail">
-	// 						</div>
-	// 						<div class="col-md-10">
-	// 							<p style="color:green;">'.$com->comment_name.'</p>
+								<img width="100%" src="'.url('/public/frontend/images/avatar.webp').'" alt="" class="img img-responsive img-thumbnail">
+							</div>
+							<div class="col-md-10">
+								<p style="color:green;">'.$com->comment_name.'</p>
                                 
-    //                             <p style="color:black;">'.$com->comment_date.'</p>
-	// 							<p>'.$com->comment.'</p>
-	// 						</div>
-	// 					</div>
-    //                     <p></p>';
-    //                     foreach($comment_reply as $key=>$com_rep){
-    //                         if($com_rep->comment_parent_id==$com->comment_id){
-    //                             $output.='
-    //                             <div class="row style_comment reply_comment" style="margin:5px 40px; background:#f7cce8;">
-    //                                         <div class="col-md-2">
+                                <p style="color:black;">'.$com->comment_date.'</p>
+								<p>'.$com->comment.'</p>
+							</div>
+						</div>
+                        <p></p>';
+                        foreach($comment_reply as $key=>$com_rep){
+                            if($com_rep->comment_parent_id==$com->comment_id){
+                                $output.='
+                                <div class="row style_comment reply_comment" style="margin:5px 40px; background:#f7cce8;">
+                                            <div class="col-md-2">
                                                 
-    //                                             <img width="100%" src="'.url('/public/frontend/images/admin.jpg').'" alt="" class="img img-responsive img-thumbnail">
-    //                                         </div>
-    //                                         <div class="col-md-10">
-    //                                             <p style="color:green;">Admin</p>
+                                                <img width="100%" src="'.url('/public/frontend/images/admin.jpg').'" alt="" class="img img-responsive img-thumbnail">
+                                            </div>
+                                            <div class="col-md-10">
+                                                <p style="color:green;">Admin</p>
                                                 
-    //                                             <p style="color:black;">'.$com_rep->comment_date.'</p>
-    //                                             <p>'.$com_rep->comment.'</p>
-    //                                         </div>
-    //                                     </div>
-    //                                     <p></p>
-    //                             ';
-    //                         }
+                                                <p style="color:black;">'.$com_rep->comment_date.'</p>
+                                                <p>'.$com_rep->comment.'</p>
+                                            </div>
+                                        </div>
+                                        <p></p>
+                                ';
+                            }
 
                            
-    //                     }
-    //     }
-    //     echo $output;
-    // }
+                        }
+        }
+        echo $output;
+    }
     public function add_product(){
         $this->AuthLogin();
         $category_product=DB::table('tbl_category_product')->orderby('category_id','desc')->get();
