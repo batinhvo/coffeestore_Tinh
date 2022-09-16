@@ -9,18 +9,13 @@
 				</ol>
 			</div><!--/breadcrums-->
 
-			
-			
-         
-			
-
 			<div class="shopper-informations">
 				<div class="row">
 					<div class="col-sm-12 clearfix" style="width:100%;">
 						<div class="bill-to">
 							<p>Điền thông tin gửi hàng</p>
 							<div class="form-one">
-								<form method="post" action="{{URL::to('/save-checkout')}}">
+								<form method="post" action="{{URL::to('/login_checkout')}}">
 									{{csrf_field()}}
 									<input required class="shipping_email" name="ship_email" type="email" placeholder="Email">
 			
@@ -51,7 +46,7 @@
 
 											<select name="payment_select"  class="form-control input-sm m-bot15 payment_select">
 												<option value="1">Tiền mặt</option>
-												<option disabled value="0">Qua chuyển khoản</option>
+												<option value="0">Qua chuyển khoản</option>
 								
 											</select>
 										</div>

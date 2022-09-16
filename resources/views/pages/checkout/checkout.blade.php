@@ -8,10 +8,7 @@
 				  <li class="active">Thanh toán giỏ hàng</li>
 				</ol>
 			</div><!--/breadcrums-->
-
 			
-			
-
 			<div class="register-req">
 				<p>Đăng kí hoặc đăng nhập để thanh toán giỏ hàng và xem lại lịch sử mua hàng</p>
 			</div><!--/register-req-->

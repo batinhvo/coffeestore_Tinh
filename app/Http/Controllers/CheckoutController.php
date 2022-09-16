@@ -23,7 +23,7 @@ class CheckoutController extends Controller
         $post=CategoryPost::where('category_post_status',1)->orderBy('category_post_id','DESC')->get();
         $category_product=DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get();
         $brand_product=DB::table('tbl_brand')->where('brand_status','1')->orderby('brand_id','desc')->get();
-        //return view('pages.checkout.delivery')->with('category_product',$category_product)->with('brand_product',$brand_product)->with('post',$post);
+        return view('pages.checkout.delivery')->with('category_product',$category_product)->with('brand_product',$brand_product)->with('post',$post);
     //    $customer_id = Session::get('customer_id');
     //    echo '<pre>';
     //     print_r($customer_id);
@@ -36,7 +36,7 @@ class CheckoutController extends Controller
         $province=Province::where('maqh',Session::get('maqh'))->first();
         $wards=Wards::where('xaid',Session::get('maxp'))->first();
         
-        //insert data into tbl_shipping
+        
         $shipping_address=$data['shipping_address'].', '. $wards->name_xaphuong.', '.$province->name_quanhuyen.', '.$city->name_thanhpho;
         $shipping=new Shipping ();
         $shipping->shipping_name=$data['shipping_name'];
@@ -47,57 +47,59 @@ class CheckoutController extends Controller
         $shipping->shipping_method=$data['shipping_method'];
         $shipping->save();
 
-        //insert data into tbl_order
         $shipping_id=$shipping->shipping_id;
+ 
         $checkout_code =substr(md5(microtime()),rand(0,26),5);
         $order=new Order();
         $order->customer_id = Session::get('customer_id');
         $order->shipping_id=$shipping_id;
         $order->order_status=1;
         $order->order_code=$checkout_code;
-        $order->order_total=100;
-        DB::table('tbl_order')->insert($order);
-        // date_default_timezone_set('Asia/Ho_Chi_Minh');
-        // $order->created_at=now();
-        // $sum= (int)str_replace(',','',Cart::total());
-        // if($data['order_coupon']=='0'){
-        //     $order_total=$sum+(int)$data['order_fee'];
-        // }
-        // else{
-        //     $coupon=Coupon::where('coupon_code',$data['order_coupon'])->first();
 
-        //     if($coupon->coupon_condition==0){
-        //         $order_total=$sum-$coupon->coupon_number+(int)$data['order_fee'];
-        //     }
-        //     else{
-        //         $order_total=$sum-$sum/100*$coupon->coupon_number+(int)$data['order_fee'];
-        //     }
-        //     $coupon->coupon_time=$coupon->coupon_time-1;
-        //     $coupon->save();
-        // }
-       
-        //$order->order_total=$order_total;
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $order->created_at=now();
+        $sum= (int)str_replace(',','',Cart::total());
+        if($data['order_coupon']=='0'){
+            $order_total=$sum+(int)$data['order_fee'];
+        }
+        else{
+            $coupon=Coupon::where('coupon_code',$data['order_coupon'])->first();
+
+            if($coupon->coupon_condition==0){
+                $order_total=$sum-$coupon->coupon_number+(int)$data['order_fee'];
+            }
+            else{
+                $order_total=$sum-$sum/100*$coupon->coupon_number+(int)$data['order_fee'];
+            }
+            $coupon->coupon_time=$coupon->coupon_time-1;
+            $coupon->save();
+        }
         
-        //$order->save();
-        // $order_id=$order->order_id;
+
+        $order->order_total=$order_total;
+
+        $order->save();
+        $order_id=$order->order_id;
         
-        // $content=Cart::content();
-        // if($content){
-        //     foreach($content as $key =>$v_content){
-        //         $order_details= new OrderDetails();
-        //         $order_details->order_id=$order_id;
-        //         $order_details->product_id=$v_content->id;
-        //         $order_details->product_name=$v_content->name;
-        //         $order_details->product_price=$v_content->price;
-        //         $order_details->product_quantity=$v_content->qty;
-        //         $order_details->product_coupon=$data['order_coupon'];
-        //         $order_details->product_feeship=$data['order_fee'];
-        //         $order_details->save();
-        //     }
-        // }
-        // Session::forget('coupon');
-        // Session::forget('fee');
-        // Cart::destroy();
+        $content=Cart::content();
+        if($content){
+            foreach($content as $key =>$v_content){
+                $order_details= new OrderDetails();
+                $order_details->order_id=$order_id;
+                $order_details->product_id=$v_content->id;
+                $order_details->product_name=$v_content->name;
+                $order_details->product_price=$v_content->price;
+                $order_details->product_quantity=$v_content->qty;
+                $order_details->product_coupon=$data['order_coupon'];
+                $order_details->product_feeship=$data['order_fee'];
+                $order_details->save();
+            }
+        }
+        Session::forget('coupon');
+        Session::forget('fee');
+        Cart::destroy();
+
+
     }
 
     public function delete_fee(){
@@ -195,7 +197,6 @@ class CheckoutController extends Controller
         $shipping_id= DB::table('tbl_shipping')->insertGetId($data);
         
         Session::put('shipping_id',$shipping_id);
-        
         return Redirect('/payment');
     }
    
