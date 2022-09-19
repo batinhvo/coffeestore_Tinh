@@ -17,10 +17,11 @@
 							<div class="form-one">
 								<form method="post" action="{{URL::to('/login_checkout')}}">
 									{{csrf_field()}}
-									<input required class="shipping_email" name="ship_email" type="email" placeholder="Email">
-			
-									<input required class="shipping_name"  name="ship_name"  type="text" placeholder="Họ và tên">
-									<input required class="shipping_phone"  name="ship_phone" type="text" placeholder="Số điện thoại">
+									@foreach($customer as $key =>$cus)
+									<input required class="shipping_email" name="ship_email" type="email" value="{{$cus->customer_email}}">
+									<input required class="shipping_name"  name="ship_name"  type="text" value="{{$cus->customer_name}}">
+									<input required class="shipping_phone"  name="ship_phone" type="text" value="{{$cus->customer_phone}}">
+									@endforeach
 									<input required class="shipping_address"   name="ship_address" type="text" placeholder="Địa chỉ">
                                     <textarea required class="shipping_notes"   name="ship_note"  placeholder="Ghi chú đơn hàng của bạn" rows="7"></textarea>
 									@if(Session::get('fee'))

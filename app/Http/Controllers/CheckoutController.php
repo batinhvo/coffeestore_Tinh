@@ -21,9 +21,11 @@ class CheckoutController extends Controller
 {
     public function info_delivery(){
         $post=CategoryPost::where('category_post_status',1)->orderBy('category_post_id','DESC')->get();
-        $category_product=DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get();
-        $brand_product=DB::table('tbl_brand')->where('brand_status','1')->orderby('brand_id','desc')->get();
-        return view('pages.checkout.delivery')->with('category_product',$category_product)->with('brand_product',$brand_product)->with('post',$post);
+        $category_product = DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get();
+        $brand_product = DB::table('tbl_brand')->where('brand_status','1')->orderby('brand_id','desc')->get();
+        $customer_id = Session::get('customer_id');
+        $customer = DB::table('tbl_customer')->where('customer_id', $customer_id)->get();
+        return view('pages.checkout.delivery')->with('category_product',$category_product)->with('brand_product',$brand_product)->with('post',$post)->with('customer',$customer);
     //    $customer_id = Session::get('customer_id');
     //    echo '<pre>';
     //     print_r($customer_id);

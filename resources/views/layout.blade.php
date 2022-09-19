@@ -19,6 +19,9 @@
     <script src="js/respond.min.js"></script>
     <![endif]-->       
     <link rel="shortcut icon" href="images/ico/favicon.ico">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" 
+	integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" 
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
@@ -153,8 +156,9 @@
 							{{csrf_field()}}
 							<div class="search_box pull-right">
 								<input type="text" id="keywords" name="keywords" placeholder="Tìm kiếm sản phẩm"/>
+								<button type="submit" style="" name="search_item" class="btn btn-sm search_item" value="Tìm kiếm">Tìm kiếm </button>
 								<div id="search-ajax"></div>
-								<input type="submit" style="" name="search_item" class="btn btn-info btn-sm" value="Tìm kiếm "/>
+
 							</div>
 						</form>
 					</div>
@@ -249,6 +253,16 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- chatbox -->
+	<session>
+		<button class="chat_icon">
+			<i class="fas fa-comment-alt"></i>
+		</button>
+		<div class="chat_box"></div>
+	</session>
+	
+	<!-- /chatbox -->
 	
 	<footer id="footer"><!--Footer-->
 		
@@ -307,8 +321,10 @@
 						<div class="single-widget">
 							<h2>Liên hệ</h2>
 							<form action="#" class="searchform">
+								<div class="searchdiv">
 								<input type="text" placeholder="Email của bạn" />
-								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+								<button type="submit" class="btn btn-default"><i class="fas fa-arrow-alt-circle-right"></i></button>
+								</div>
 								<p>Nhận các bản cập nhật gần đây nhất từ ​​trang web của chúng tôi và được cập nhật chính bạn ...</p>
 							</form>
 						</div>
@@ -340,6 +356,15 @@
 	<script src="{{asset('public/frontend/js/main.js')}}"></script>
 	<script src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
 	<script type="text/javascript">
+
+		// chatbox mới tạo ở đây nè
+		$(document).ready(function(){
+			$('.chat_icon').click(function(event){
+				$('.chat_box').toggleClass('active');
+			});
+			
+		});
+		// /chatbox
 		
 		$('#keywords').keyup(function(){
 			var query =$(this).val();

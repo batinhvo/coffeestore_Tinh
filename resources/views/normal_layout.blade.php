@@ -172,16 +172,16 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <form autocomplete="off" action="{{URL::to('/tim-kiem')}}" method="post">
-                            {{csrf_field()}}
-                            <div class="search_box pull-right">
-                                <input type="text" id="keywords" name="keywords" placeholder="Tìm kiếm sản phẩm" />
-                                <div id="search-ajax"></div>
-                                <input type="submit" style="" name="search_item" class="btn btn-info btn-sm"
-                                    value="Tìm kiếm " />
-                            </div>
-                        </form>
-                    </div>
+						<form autocomplete="off" action="{{URL::to('/tim-kiem')}}" method="post">
+							{{csrf_field()}}
+							<div class="search_box pull-right">
+								<input type="text" id="keywords" name="keywords" placeholder="Tìm kiếm sản phẩm"/>
+								<button type="submit" style="" name="search_item" class="btn btn-sm search_item" value="Tìm kiếm">Tìm kiếm </button>
+								<div id="search-ajax"></div>
+
+							</div>
+						</form>
+					</div>
                 </div>
             </div>
         </div>
@@ -241,6 +241,16 @@
         </div>
     </section>
 
+    <!-- chatbox -->
+	<session>
+		<button class="chat_icon">
+			<i class="fas fa-comment-alt"></i>
+		</button>
+		<div class="chat_box"></div>
+	</session>
+	
+	<!-- /chatbox -->
+
     <footer id="footer">
         <!--Footer-->
 
@@ -297,14 +307,14 @@
                     </div>
                     <div class="col-sm-3 col-sm-offset-1">
                         <div class="single-widget">
-                            <h2>Liên hệ</h2>
-                            <form action="#" class="searchform">
-                                <input type="text" placeholder="Email của bạn" />
-                                <button type="submit" class="btn btn-default"><i
-                                        class="fa fa-arrow-circle-o-right"></i></button>
-                                <p>Nhận các bản cập nhật gần đây nhất từ ​​trang web của chúng tôi và được cập nhật
-                                    chính bạn ...</p>
-                            </form>
+                        <h2>Liên hệ</h2>
+							<form action="#" class="searchform">
+								<div class="searchdiv">
+								<input type="text" placeholder="Email của bạn" />
+								<button type="submit" class="btn btn-default"><i class="fas fa-arrow-alt-circle-right"></i></button>
+								</div>
+								<p>Nhận các bản cập nhật gần đây nhất từ ​​trang web của chúng tôi và được cập nhật chính bạn ...</p>
+							</form>
                         </div>
                     </div>
 
@@ -341,6 +351,15 @@
     <script src="{{asset('public/frontend/js/prettify.js')}}"></script>
 
     <script type="text/javascript">
+        // chatbox mới tạo ở đây nè
+		$(document).ready(function(){
+			$('.chat_icon').click(function(event){
+				$('.chat_box').toggleClass('active');
+			});
+			
+		});
+		// /chatbox
+
     $(document).ready(function() {
         $('#imageGallery').lightSlider({
             gallery: true,
@@ -585,8 +604,19 @@
                                 _token: _token
                             },
                             success: function(data) {
-                                swal("Đơn hàng", "Đơn hàng của bạn đã được xác nhận",
-                                    "success");
+                                swal({
+                                title: "Đơn hàng",
+                                text: "Đơn hàng của bạn đã được xác nhận",
+                                // showCancelButton: true,
+                                // cancelButtonText: "Xem tiếp",
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "OK",
+                                closeOnConfirm: false
+                            },
+                            function() {
+                                window.location.href = "{{url('/trang-chu')}}";
+                            });
+
                             }
                         });
                         window.setTimeout(function() {
