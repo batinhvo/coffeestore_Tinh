@@ -63,6 +63,7 @@ class HomeController extends Controller
             $message->from($to_email,$to_name);//send from this mail
         });
          //return Redirect::to('/')->with('message','');
-
     }
+
+    
 }

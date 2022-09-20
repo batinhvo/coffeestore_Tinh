@@ -257,9 +257,30 @@
 	<!-- chatbox -->
 	<session>
 		<button class="chat_icon">
-			<i class="fas fa-comment-alt"></i>
+			<i class="fas fa-comments"></i>
 		</button>
-		<div class="chat_box"></div>
+		<div class="chat_box">
+			<div class="title">
+				Hỗ trợ khách hàng
+				<button class="exit" onclick="closeBtn()"><i class="fas fa-times"></i></button>
+			</div>
+			<div class="form">
+				<div class="bot-inbox inbox">
+					<div class="icon">
+						<i class="fas fa-user"></i>
+					</div>
+					<div class="msg-header">
+						<p>Hello! Can I help you?</p>
+					</div>
+				</div>		
+			</div>
+			<div class="typing-field">
+				<div class="input-data">
+					<input id="data" type="text" placeholder="Nhập vào đây..." required>
+					<button id="send-btn">Gửi</button>
+				</div>
+			</div>
+		</div>
 	</session>
 	
 	<!-- /chatbox -->
@@ -357,14 +378,37 @@
 	<script src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
 	<script type="text/javascript">
 
-		// chatbox mới tạo ở đây nè
-		$(document).ready(function(){
+			
+
+			// chatbox mới tạo ở đây nè
+			$(document).ready(function(){
 			$('.chat_icon').click(function(event){
 				$('.chat_box').toggleClass('active');
 			});
-			
+			$('.exit').click(function(event){
+				$('.chat_box').toggleClass('active');
+			});
+			$('#send-btn').on("click", function(){
+               	var $value = $("#data").val();
+				$msg = '<div class="user-inbox inbox"><div class="msg-header"><p>'+ $value +'</p></div></div>';
+	            $(".form").append($msg);
+				$("#data").val('');
+
+				//xử lý ajax bắt đầu
+				$.ajax({
+					url: '{{url('/payment')}}',
+					type: 'POST',
+					data: {value:$value},
+					success: function(result){
+						// $replay = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>'+ result +'</p></div></div>';
+						// $(".form").append($replay);
+					}
+				});	
+			});
 		});
 		// /chatbox
+		
+
 		
 		$('#keywords').keyup(function(){
 			var query =$(this).val();

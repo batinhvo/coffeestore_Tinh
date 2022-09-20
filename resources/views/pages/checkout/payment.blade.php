@@ -9,12 +9,6 @@
 				</ol>
 			</div><!--/breadcrums-->
 
-			
-			
-
-		
-
-		
 			<div class="review-payment">
 				<h2>Xem lại giỏ hàng</h2>
 			</div>

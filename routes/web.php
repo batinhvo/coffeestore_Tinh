@@ -114,6 +114,9 @@ Route::post('/update-order-quantity','App\Http\Controllers\OrderController@updat
 //send mail
 Route::get('send-mail','App\Http\Controllers\HomeController@send_mail');
 
+//chatbox
+// Route::post('chatbox','App\Http\Controllers\HomeController@chatbox');
+
 //check-coupon
 Route::post('/check-coupon','App\Http\Controllers\CheckoutController@check_coupon');
 Route::get('/insert-coupon','App\Http\Controllers\CouponController@insert_coupon');
