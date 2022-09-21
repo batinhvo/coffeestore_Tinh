@@ -394,16 +394,24 @@
 	            $(".form").append($msg);
 				$("#data").val('');
 
-				//xử lý ajax bắt đầu
-				$.ajax({
-					url: '{{url('/payment')}}',
+			//xử lý ajax bắt đầu
+			var value = $value;
+				
+				if(value!=''){
+					var _token = $('input[name="_token"]').val();
+					$.ajax({
+					url: '{{url('/chatbot')}}',
 					type: 'POST',
-					data: {value:$value},
-					success: function(result){
-						// $replay = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>'+ result +'</p></div></div>';
-						// $(".form").append($replay);
+					data:{_token:_token,value:value},
+					success:function(data){
+						$reply = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header" id="msg-header"><p>'+ data +'</p></div></div>'
+						$(".form").append($reply);
+                        $(".form").scrollTop($(".form")[0].scrollHeight);
 					}
 				});	
+				}else{
+					$('#msg-header').fadeOut();
+				}
 			});
 		});
 		// /chatbox

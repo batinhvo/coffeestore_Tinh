@@ -29,6 +29,20 @@ class HomeController extends Controller
             echo $output;
         }
     }
+
+    public function chatbot(Request $request){
+        $data=$request->all();
+        if($data['value']){
+            $chat = DB::table('tbl_chatbot')->where('chatbot_queries','LIKE','%'.$data['value'].'%')->get();
+            $output='Sorry! You so crazy^^';
+            foreach($chat as $key => $val){
+                $output=$val->chatbot_replies;
+            }
+            echo $output;
+            
+        }
+    }
+
     public function index(){
         $slider=Slider::where('slider_status',1)->orderBy('slider_id','DESC')->get();
         $post=CategoryPost::where('category_post_status',1)->orderBy('category_post_id','DESC')->get();
