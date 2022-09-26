@@ -114,6 +114,11 @@ body {
   display: flex;
   align-items: baseline;
   overflow: hidden;
+  
+}
+
+.word-break{
+  word-break: break-word !important;
 }
 
 .chat_box .form .user-inbox{

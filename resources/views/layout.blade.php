@@ -255,7 +255,7 @@
 	</section>
 
 	<!-- chatbox -->
-	<session>
+	<!-- <session>
 		<button class="chat_icon">
 			<i class="fas fa-comments"></i>
 		</button>
@@ -270,7 +270,7 @@
 						<i class="fas fa-user"></i>
 					</div>
 					<div class="msg-header">
-						<p>Hello! Can I help you?</p>
+						<p class="word-break" >Xin chào! CoffeeStore có thể giúp gì cho bạn ạ?</p>
 					</div>
 				</div>		
 			</div>
@@ -281,7 +281,7 @@
 				</div>
 			</div>
 		</div>
-	</session>
+	</session> -->
 	
 	<!-- /chatbox -->
 	
@@ -390,7 +390,7 @@
 			});
 			$('#send-btn').on("click", function(){
                	var $value = $("#data").val();
-				$msg = '<div class="user-inbox inbox"><div class="msg-header"><p>'+ $value +'</p></div></div>';
+				$msg = '<div class="user-inbox inbox"><div class="msg-header"><p class="word-break">'+ $value +'</p></div></div>';
 	            $(".form").append($msg);
 				$("#data").val('');
 
@@ -404,7 +404,7 @@
 					type: 'POST',
 					data:{_token:_token,value:value},
 					success:function(data){
-						$reply = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header" id="msg-header"><p>'+ data +'</p></div></div>'
+						$reply = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header" id="msg-header"><p class="word-break">'+ data +'</p></div></div>'
 						$(".form").append($reply);
                         $(".form").scrollTop($(".form")[0].scrollHeight);
 					}
@@ -515,6 +515,35 @@
 	js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
 	fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk')); -->
+</script>
+
+<style>
+        .rw-conversation-container .rw-header {background-color: brown}
+        .rw-conversation-container .rw-messages-container .rw-message .rw-client {background-color: brown}
+        .rw-launcher{background-color: brown; margin-bottom: 50px;}
+      </style>
+<script>!(function () {
+            let e = document.createElement("script"),
+              t = document.head || document.getElementsByTagName("head")[0];
+            (e.src =
+              "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+              // Replace 1.x.x with the version that you want
+              (e.async = !0),
+              (e.onload = () => {
+                window.WebChat.default(
+                  {
+                    initPayload: '/greet',
+                    customData: { language: "en" },
+                    socketUrl: "http://localhost:5005",
+                    title: "Hỗ trợ khách hàng",
+                    subtitle: "Hân hạnh phục vụ!!!"
+                    // add other props here
+                  },
+                  null
+                );
+              }),
+              t.insertBefore(e, t.firstChild);
+          })();
 </script>
 
 </body>

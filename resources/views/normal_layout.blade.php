@@ -389,19 +389,29 @@
 	            $(".form").append($msg);
 				$("#data").val('');
 
-				//xử lý ajax bắt đầu
-				$.ajax({
-					url: '{{url('/payment')}}',
+			//xử lý ajax bắt đầu
+			var value = $value;
+				
+				if(value!=''){
+					var _token = $('input[name="_token"]').val();
+					$.ajax({
+					url: '{{url('/chatbot')}}',
 					type: 'POST',
-					data: {value:$value},
-					success: function(result){
-						// $replay = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>'+ result +'</p></div></div>';
-						// $(".form").append($replay);
+					data:{_token:_token,value:value},
+					success:function(data){
+						$reply = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header" id="msg-header"><p>'+ data +'</p></div></div>'
+						$(".form").append($reply);
+                        $(".form").scrollTop($(".form")[0].scrollHeight);
 					}
 				});	
+				}else{
+					$('#msg-header').fadeOut();
+				}
 			});
 		});
 		// /chatbox
+		
+
 
     $(document).ready(function() {
         $('#imageGallery').lightSlider({
@@ -707,6 +717,36 @@
 	fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 </script> -->
+
+<style>
+        .rw-conversation-container .rw-header {background-color: brown}
+        .rw-conversation-container .rw-messages-container .rw-message .rw-client {background-color: brown}
+        .rw-launcher{background-color: brown; margin-bottom: 50px;}
+      </style>
+<script>!(function () {
+            let e = document.createElement("script"),
+              t = document.head || document.getElementsByTagName("head")[0];
+            (e.src =
+              "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+              // Replace 1.x.x with the version that you want
+              (e.async = !0),
+              (e.onload = () => {
+                window.WebChat.default(
+                  {
+                    initPayload: '/greet',
+                    customData: { language: "en" },
+                    socketUrl: "http://localhost:5005",
+                    title: "Hỗ trợ khách hàng",
+                    subtitle: "Hân hạnh phục vụ!!!"
+                    // add other props here
+                  },
+                  null
+                );
+              }),
+              t.insertBefore(e, t.firstChild);
+          })();
+</script>
+
 
 </body>
 
