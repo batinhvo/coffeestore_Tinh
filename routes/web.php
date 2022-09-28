@@ -150,6 +150,11 @@ Route::get('/all-manage','App\Http\Controllers\AuthController@all_manage');
 Route::get('/register-auth','App\Http\Controllers\AuthController@register_auth');
 Route::post('/register','App\Http\Controllers\AuthController@register');
 
+//warehouse
+Route::post('/save-warehouse','App\Http\Controllers\AuthController@save_warehouse');
+Route::get('/add-warehouse','App\Http\Controllers\AuthController@add_warehouse');
+Route::get('/manage-warehouse','App\Http\Controllers\AuthController@manage_warehouse');
+
 //post
 Route::get('/add-post','App\Http\Controllers\PostController@add_post');
 Route::post('/save-post','App\Http\Controllers\PostController@save_post');

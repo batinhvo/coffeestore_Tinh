@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                 <label for="exampleInputPassword1">Thương hiệu sản phẩm</label>
                                     <select name="brand_product" class="form-control input-sm m-bot15">
-                                        @foreach($brand_product as $key =>$brand)
+                                        @foreach($brand_product as $key => $brand)
                                             <option value="{{$brand->brand_id}}">{{$brand->brand_name}} </option>
                                         @endforeach
                         
